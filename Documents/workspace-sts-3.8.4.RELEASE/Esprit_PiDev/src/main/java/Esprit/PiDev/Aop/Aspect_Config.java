@@ -14,7 +14,7 @@ public class Aspect_Config {
 	long First_time;
 	long Second_time;
 	Logger logAspect = Logger.getLogger(this.getClass().getName());
-	@Pointcut("call(* *.*.main())")	
+	@Pointcut("execution(* *.*.main(..))")	
 	public void call_Main()  {}
 	
 	@Before("call_Main()")
@@ -22,7 +22,9 @@ public class Aspect_Config {
 	{
 		First_time = System.currentTimeMillis(); logAspect.info("***********");
 		logAspect.info("before : " + thisJoinPoint.getSignature());
+		System.out.println("before : " + thisJoinPoint.getSignature());
 	}
+	
 	
 	@After("call_Main()")
 	public void After_Call_Main(JoinPoint thisJoinPoint)
