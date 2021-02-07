@@ -1,19 +1,16 @@
 package Esprit.PiDev.Entity;
 
  
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.sun.istack.NotNull;
+ 
 
 @Entity
 @Table(name = "T_User_Role")
@@ -28,33 +25,30 @@ public class Dbo_Role   {
 	@Column(name = "Role_id")
 	private Long id;
 
-	public Dbo_Role(Long id, String name) {
+	@Enumerated(EnumType.STRING)
+	@Column(name = "User_Role_Name",length = 20)
+	private ERole name;
+
+	public Dbo_Role(ERole name) {
 		super();
-		this.id = id;
-		this.name = name;
+		this.name=name;
 	}
 
 	public Dbo_Role() {
 		super();
 	}
 
-	public Dbo_Role(String name) {
-		super();
-		this.name = name;
-	}
-
-	@NotNull
-	@Column(name = "User_Role_Name")
-	private String name;
+	 
 	
-	@OneToMany( targetEntity=Dbo_User.class ,
-				mappedBy="role" ,
-				fetch = FetchType.LAZY ,
-				cascade =CascadeType.ALL
-				)
-	private Set<Dbo_User> users;
+	 
 
 	/*-----------------------****Getters_Setters_Methods()****-------------------------------------*/
+
+	
+
+
+
+
 
 	public Long getId() {
 		return id;
@@ -64,12 +58,22 @@ public class Dbo_Role   {
 		this.id = id;
 	}
 
-	public String getName() {
+	/**
+	 * @return the name
+	 */
+	public ERole getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(ERole name) {
 		this.name = name;
 	}
+
+	 
+
+	 
 
 }

@@ -2,19 +2,30 @@ package Esprit.PiDev.Entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
+
+import org.springframework.lang.NonNull;
 
 import com.sun.istack.NotNull;
+
+ 
 
 @Entity
 @Table(name = "T_User")
@@ -23,6 +34,7 @@ public class Dbo_User implements Serializable {
 	/**
 	 * 
 	 */
+	 
 	private static final long serialVersionUID = 1L;
 	/*-----------------------****Bean_Attributes****-------------------------------------*/
 	@Id
@@ -30,18 +42,20 @@ public class Dbo_User implements Serializable {
 	@Column(name = "User_id")
 	private Long id;
 
-	@NotNull
+	@NonNull
+	@Size(min=3, max=30)
 	@Column(name = "User_First_Name")
 	private String firstName;
 
-	@NotNull
+	@NonNull
+	@Size(min=3, max=30)
 	@Column(name = "User_Last_Name")
 	private String lastName;
 
 	@NotNull
 	@Column(columnDefinition = "boolean default false")
 	private boolean actif;
-
+	 
 	@NotNull
 	@Column(name = "User_Birthday_Date")
 	@Temporal(TemporalType.DATE)
@@ -55,14 +69,55 @@ public class Dbo_User implements Serializable {
 	@Column(name = "User_Password")
 	private String password;
 
-	@ManyToOne
-	@JoinColumn(name = "role_id")
-	private Dbo_Role role;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(	name = "user_roles", 
+				joinColumns = @JoinColumn(name = "user_id"), 
+				inverseJoinColumns = @JoinColumn(name = "role_id"))
+	 
+	private Set<Dbo_Role> role = new HashSet<>();
+	
+	@Column(name="created_time" ,updatable=false)
+	private Date createdTime;
+	
+	@Column(name="Last_Logged_In" ,updatable=true)
+	private Date lastLoggedIn;
+	
+	@Column(name="Last_Logged_out" ,updatable=true)
+	private Date lastLoggedOut;
+	
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="Auth_User_Provider")
+	private Dbo_User_Provider dbo_User_Provider;
+	
+
+
+	@Column(name="Last_Session_Id_Generated")
+	private String Session_Id;
+	 
+	
 
 	/*-----------------------****Getters_Setters_Methods()****-------------------------------------*/
+	
+	
+	public String getFullName()
+	{
+		return getFirstName()+" "+getLastName();
+	}
+ 
+	public String getSession_Id() {
+		return Session_Id;
+	}
+
+	public void setSession_Id(String session_Id) {
+		Session_Id = session_Id;
+	}
+	
 	public Long getId() {
 		return id;
 	}
+
+ 
 
 	public void setId(Long id) {
 		this.id = id;
@@ -72,14 +127,20 @@ public class Dbo_User implements Serializable {
 		return firstName;
 	}
 
-	public Dbo_Role getRole() {
+ 
+
+	/**
+	 * @return the role
+	 */
+	public Set<Dbo_Role> getRole() {
 		return role;
 	}
-
-	public void setRole(Dbo_Role role) {
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(Set<Dbo_Role> role) {
 		this.role = role;
 	}
-
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -123,6 +184,41 @@ public class Dbo_User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+
+	public Dbo_User_Provider getDbo_User_Provider() {
+		return dbo_User_Provider;
+	}
+
+	public void setDbo_User_Provider(Dbo_User_Provider dbo_User_Provider) {
+		this.dbo_User_Provider = dbo_User_Provider;
+	}
+	
+
+	public Date getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+	
+
+	public Date getLastLoggedIn() {
+		return lastLoggedIn;
+	}
+
+	public void setLastLoggedIn(Date lastLoggedIn) {
+		this.lastLoggedIn = lastLoggedIn;
+	}
+
+	public Date getLastLoggedOut() {
+		return lastLoggedOut;
+	}
+
+	public void setLastLoggedOut(Date lastLoggedOut) {
+		this.lastLoggedOut = lastLoggedOut;
+	}
 
 	/*-----------------------****Constructors_Object****-------------------------------------*/
 	public Dbo_User() {
@@ -141,8 +237,12 @@ public class Dbo_User implements Serializable {
 		this.password = password;
 	}
 
-	public Dbo_User(String firstName, String lastName, boolean actif, Date date, String email, String password,
-			Dbo_Role role) {
+ 
+
+	
+	/*  Constructor of registration  */
+	public Dbo_User(@Size(min = 3, max = 30) String firstName, @Size(min = 3, max = 30) String lastName, boolean actif,
+			Date date, String email, String password, Set<Dbo_Role> role) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -152,7 +252,6 @@ public class Dbo_User implements Serializable {
 		this.password = password;
 		this.role = role;
 	}
-
 	public Dbo_User(String firstName, String lastName, boolean actif, String email, String password) {
 		super();
 		this.firstName = firstName;
@@ -167,6 +266,15 @@ public class Dbo_User implements Serializable {
 		this.password = password;
 	}
 
+ 
+	public Dbo_User(String email, String firstName, String lastName, boolean actif, Date date, String password) {
+		// TODO Auto-generated constructor stub
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.actif = actif;
+		this.email = email;
+		this.password = password;
+	}
 	/*-----------------------****TO_String()****-------------------------------------*/
 	@Override
 	public String toString() {
@@ -174,5 +282,9 @@ public class Dbo_User implements Serializable {
 				+ ", date=" + date + ", email=" + email + ", password=" + password + "]";
 	}
 	/*------------------------------------------------------------*/
+
+	 
+
+	 
 
 }

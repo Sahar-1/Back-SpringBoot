@@ -3,13 +3,14 @@ package Esprit.PiDev.Service;
 import java.util.Collection;
 import java.util.Optional;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Esprit.PiDev.Entity.Dbo_Role;
 import Esprit.PiDev.InterfaceService.Interface_User_Role_Service;
 import Esprit.PiDev.Repository.Role_Repository;
-import net.minidev.json.JSONObject;
+ 
  
 
 @Service
@@ -37,11 +38,7 @@ public class User_Role_Service implements Interface_User_Role_Service{
 		return role_Repository.saveAndFlush(role);
 	}
 
-	@Override
-	public Optional<Dbo_Role> findById(Long id) {
-		 
-		return role_Repository.findById(id);
-	}
+ 
 
 	@Override
 	public String deleteById(Long id) {
@@ -56,5 +53,11 @@ public class User_Role_Service implements Interface_User_Role_Service{
 			e.printStackTrace();
 		}
 		return jsonObject.toString();
+	}
+
+	@Override
+	public Optional<Dbo_Role> findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
