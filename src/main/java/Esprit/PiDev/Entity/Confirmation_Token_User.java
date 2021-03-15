@@ -43,6 +43,8 @@ public class Confirmation_Token_User {
 		createdDate = new Date();
 		confirmationToken = UUID.randomUUID().toString();
 	}
+	
+	
 
 	public long getTokenid() {
 		return tokenid;

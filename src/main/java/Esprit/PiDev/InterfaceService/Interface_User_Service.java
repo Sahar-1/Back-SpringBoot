@@ -19,5 +19,11 @@ public interface Interface_User_Service {
 
 	Long FindIDUserByEmail(String email);
 
-	
+	public void increaseFailedAttempts(Dbo_User userAttempt);
+
+	public void resetFailedAttempts(String email);
+
+	public void lock(Dbo_User userAttempt);
+
+	public boolean unlockWhenTimeExpired(Dbo_User userToUnlock);
 }

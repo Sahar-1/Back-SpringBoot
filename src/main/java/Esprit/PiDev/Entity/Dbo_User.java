@@ -1,290 +1,329 @@
 package Esprit.PiDev.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sun.istack.NotNull;
+
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
-
-import org.springframework.lang.NonNull;
-
-import com.sun.istack.NotNull;
-
- 
-
+@SuppressWarnings("ALL")
 @Entity
 @Table(name = "T_User")
 public class Dbo_User implements Serializable {
 
-	/**
-	 * 
-	 */
-	 
-	private static final long serialVersionUID = 1L;
-	/*-----------------------****Bean_Attributes****-------------------------------------*/
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "User_id")
-	private Long id;
+    /**
+     *
+     */
 
-	@NonNull
-	@Size(min=3, max=30)
-	@Column(name = "User_First_Name")
-	private String firstName;
+    private static final long serialVersionUID = 1L;
+    /*-----------------------****Bean_Attributes****-------------------------------------*/
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "User_id")
+    private Long id;
 
-	@NonNull
-	@Size(min=3, max=30)
-	@Column(name = "User_Last_Name")
-	private String lastName;
+    @NotNull
+    @Column(name = "User_First_Name")
+    private String firstName;
 
-	@NotNull
-	@Column(columnDefinition = "boolean default false")
-	private boolean actif;
-	 
-	@NotNull
-	@Column(name = "User_Birthday_Date")
-	@Temporal(TemporalType.DATE)
-	private Date date;
-
-	@NotNull
-	@Column(name = "User_Email")
-	private String email;
-
-	@NotNull
-	@Column(name = "User_Password")
-	private String password;
-
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(	name = "user_roles", 
-				joinColumns = @JoinColumn(name = "user_id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id"))
-	 
-	private Set<Dbo_Role> role = new HashSet<>();
-	
-	@Column(name="created_time" ,updatable=false)
-	private Date createdTime;
-	
-	@Column(name="Last_Logged_In" ,updatable=true)
-	private Date lastLoggedIn;
-	
-	@Column(name="Last_Logged_out" ,updatable=true)
-	private Date lastLoggedOut;
-	
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name="Auth_User_Provider")
-	private Dbo_User_Provider dbo_User_Provider;
-	
+    @NotNull
+    @Column(name = "User_Last_Name")
+    private String lastName;
 
 
-	@Column(name="Last_Session_Id_Generated")
-	private String Session_Id;
-	 
-	
+    @NotNull
+    @Column(columnDefinition = "boolean default false")
+    private boolean actif;
 
-	/*-----------------------****Getters_Setters_Methods()****-------------------------------------*/
-	
-	
-	public String getFullName()
-	{
-		return getFirstName()+" "+getLastName();
-	}
- 
-	public String getSession_Id() {
-		return Session_Id;
-	}
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    @Column(name = "User_Birthday_Date")
+    @Temporal(TemporalType.DATE)
+    private Date date;
 
-	public void setSession_Id(String session_Id) {
-		Session_Id = session_Id;
-	}
-	
-	public Long getId() {
-		return id;
-	}
+    @NotNull
+    @Column(name = "User_Email")
+    private String email;
 
- 
+    @NotNull
+    @Column(name = "User_Password")
+    private String password;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 
-	public String getFirstName() {
-		return firstName;
-	}
+    private Set<Dbo_Role> role = new HashSet<>();
 
- 
+    @Column(name = "created_time", updatable = false)
+    private Date createdTime;
 
-	/**
-	 * @return the role
-	 */
-	public Set<Dbo_Role> getRole() {
-		return role;
-	}
-	/**
-	 * @param role the role to set
-	 */
-	public void setRole(Set<Dbo_Role> role) {
-		this.role = role;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    @Column(name = "Last_Logged_In", updatable = true)
+    private Date lastLoggedIn;
 
-	public String getLastName() {
-		return lastName;
-	}
+    @Column(name = "Last_Logged_out", updatable = true)
+    private Date lastLoggedOut;
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Auth_User_Provider")
+    private Dbo_User_Provider dbo_User_Provider;
 
-	public boolean isActif() {
-		return actif;
-	}
+    @Column(name = "Last_Session_Id_Generated")
+    private String Session_Id;
 
-	public void setActif(boolean actif) {
-		this.actif = actif;
-	}
+    @Column(name = "account_non_locked")
+    private boolean accountNonLocked;
 
-	public Date getDate() {
-		return date;
-	}
+    @Column(name = "failed_attempt")
+    private int failedAttempt;
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    @Column(name = "lock_time")
+    private Date lockTime;
 
-	public String getEmail() {
-		return email;
-	}
+    @ManyToMany(mappedBy = "child_participant")
+    private Set<Event> events;
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    @Column(name = "upload_dir")
+    private String uploadDir;
 
-	public String getPassword() {
-		return password;
-	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
 
-	public Dbo_User_Provider getDbo_User_Provider() {
-		return dbo_User_Provider;
-	}
+    /*-----------------------****Getters_Setters_Methods()****-------------------------------------*/
 
-	public void setDbo_User_Provider(Dbo_User_Provider dbo_User_Provider) {
-		this.dbo_User_Provider = dbo_User_Provider;
-	}
-	
+    public Set<Event> getEvents() {
+        return events;
+    }
 
-	public Date getCreatedTime() {
-		return createdTime;
-	}
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
 
-	public void setCreatedTime(Date createdTime) {
-		this.createdTime = createdTime;
-	}
-	
+    public String getFullName() {
+        return getFirstName() + " " + getLastName();
+    }
 
-	public Date getLastLoggedIn() {
-		return lastLoggedIn;
-	}
+    /**
+     * @return the accountNonLocked
+     */
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
 
-	public void setLastLoggedIn(Date lastLoggedIn) {
-		this.lastLoggedIn = lastLoggedIn;
-	}
+    /**
+     * @param accountNonLocked the accountNonLocked to set
+     */
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
 
-	public Date getLastLoggedOut() {
-		return lastLoggedOut;
-	}
+    /**
+     * @return the failedAttempt
+     */
+    public int getFailedAttempt() {
+        return failedAttempt;
+    }
 
-	public void setLastLoggedOut(Date lastLoggedOut) {
-		this.lastLoggedOut = lastLoggedOut;
-	}
+    /**
+     * @param failedAttempt the failedAttempt to set
+     */
+    public void setFailedAttempt(int failedAttempt) {
+        this.failedAttempt = failedAttempt;
+    }
 
-	/*-----------------------****Constructors_Object****-------------------------------------*/
-	public Dbo_User() {
-		super();
-	}
+    /**
+     * @return the lockTime
+     */
+    public Date getLockTime() {
+        return lockTime;
+    }
 
-	public Dbo_User(Long id, String firstName, String lastName, boolean actif, Date date, String email,
-			String password) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.actif = actif;
-		this.date = date;
-		this.email = email;
-		this.password = password;
-	}
+    /**
+     * @param lockTime the lockTime to set
+     */
+    public void setLockTime(Date lockTime) {
+        this.lockTime = lockTime;
+    }
 
- 
+    public String getSession_Id() {
+        return Session_Id;
+    }
 
-	
-	/*  Constructor of registration  */
-	public Dbo_User(@Size(min = 3, max = 30) String firstName, @Size(min = 3, max = 30) String lastName, boolean actif,
-			Date date, String email, String password, Set<Dbo_Role> role) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.actif = actif;
-		this.date = date;
-		this.email = email;
-		this.password = password;
-		this.role = role;
-	}
-	public Dbo_User(String firstName, String lastName, boolean actif, String email, String password) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.actif = actif;
-		this.email = email;
-		this.password = password;
-	}
+    public void setSession_Id(String session_Id) {
+        Session_Id = session_Id;
+    }
 
-	public Dbo_User(String email, String password) {
-		super();
-		this.password = password;
-	}
+    public Long getId() {
+        return id;
+    }
 
- 
-	public Dbo_User(String email, String firstName, String lastName, boolean actif, Date date, String password) {
-		// TODO Auto-generated constructor stub
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.actif = actif;
-		this.email = email;
-		this.password = password;
-	}
-	/*-----------------------****TO_String()****-------------------------------------*/
-	@Override
-	public String toString() {
-		return "Dbo_User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", actif=" + actif
-				+ ", date=" + date + ", email=" + email + ", password=" + password + "]";
-	}
-	/*------------------------------------------------------------*/
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	 
+    public String getFirstName() {
+        return firstName;
+    }
 
-	 
+    /**
+     * @return the role
+     */
+    public Set<Dbo_Role> getRole() {
+        return role;
+    }
+
+    /**
+     * @param role the role to set
+     */
+    public void setRole(Set<Dbo_Role> role) {
+        this.role = role;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public boolean isActif() {
+        return actif;
+    }
+
+    public void setActif(boolean actif) {
+        this.actif = actif;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Dbo_User_Provider getDbo_User_Provider() {
+        return dbo_User_Provider;
+    }
+
+    public void setDbo_User_Provider(Dbo_User_Provider dbo_User_Provider) {
+        this.dbo_User_Provider = dbo_User_Provider;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getLastLoggedIn() {
+        return lastLoggedIn;
+    }
+
+    public void setLastLoggedIn(Date lastLoggedIn) {
+        this.lastLoggedIn = lastLoggedIn;
+    }
+
+    public Date getLastLoggedOut() {
+        return lastLoggedOut;
+    }
+
+    public void setLastLoggedOut(Date lastLoggedOut) {
+        this.lastLoggedOut = lastLoggedOut;
+    }
+
+    public String getUploadDir() {
+        return uploadDir;
+    }
+
+    public void setUploadDir(String uploadDir) {
+        this.uploadDir = uploadDir;
+    }
+
+    /*-----------------------****Constructors_Object****-------------------------------------*/
+    public Dbo_User() {
+        super();
+    }
+
+    public Dbo_User(Long id, String firstName, String lastName, boolean actif, Date date, String email,
+                    String password) {
+        super();
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.actif = actif;
+        this.date = date;
+        this.email = email;
+        this.password = password;
+    }
+
+    /* Constructor of registration */
+    public Dbo_User(@Size(min = 3, max = 30) String firstName, @Size(min = 3, max = 30) String lastName, boolean actif,
+                    Date date, String email, String password, Set<Dbo_Role> role) {
+        super();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.actif = actif;
+        this.date = date;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+    public Dbo_User(String firstName, String lastName, boolean actif, String email, String password) {
+        super();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.actif = actif;
+        this.email = email;
+        this.password = password;
+    }
+
+    public Dbo_User(String email, String password) {
+        super();
+        this.password = password;
+    }
+
+    public Dbo_User(String email, String firstName, String lastName, boolean actif, Date date, String password) {
+        // TODO Auto-generated constructor stub
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.actif = actif;
+        this.email = email;
+        this.password = password;
+    }
+
+
+    /*-----------------------****TO_String()****-------------------------------------*/
+    @Override
+    public String toString() {
+        return "Dbo_User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", actif=" + actif
+                + ", date=" + date + ", email=" + email + ", password=" + password + "]";
+    }
+    /*------------------------------------------------------------*/
 
 }

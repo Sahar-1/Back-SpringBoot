@@ -10,7 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
- 
+
+@SuppressWarnings("ALL")
 
 @Entity
 @Table(name = "T_User_Role")
@@ -29,14 +30,6 @@ public class Dbo_Role   {
 	@Column(name = "User_Role_Name",length = 20)
 	private ERole name;
 
-	public Dbo_Role(ERole name) {
-		super();
-		this.name=name;
-	}
-
-	public Dbo_Role() {
-		super();
-	}
 
 	 
 	
@@ -72,8 +65,16 @@ public class Dbo_Role   {
 		this.name = name;
 	}
 
-	 
+	/* Constructor  */
 
+	public Dbo_Role(ERole name) {
+		super();
+		this.name=name;
+	}
+
+	public Dbo_Role() {
+		super();
+	}
 	 
 
 }

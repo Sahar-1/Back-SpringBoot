@@ -1,43 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
 
-<configuration>
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
-   <Appenders name="Console"
-        class="ch.qos.logback.core.ConsoleAppender">
-        <PatternLayout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>
-                %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
-            </Pattern>
-        </PatternLayout>
+<appender name="console" class="org.apache.log4j.ConsoleAppender">
 
-        <RollingFile name="RollingFile"
-            fileName="./logs/spring-boot-logger-log4j2.log"
-            filePattern="./logs/$${date:yyyy-MM}/spring-boot-logger-log4j2-%d{-dd-MMMM-yyyy}-%i.log.gz">
-            <PatternLayout>
-                <pattern>%d %p %C{1.} [%t] %m%n</pattern>
-            </PatternLayout>
-            <Policies>
-                <!-- ROLLOVER on startup, daily and when the file reaches 
-                    10 MegaBytes -->
-                <OnStartupTriggeringPolicy />
-                <SizeBasedTriggeringPolicy
-                    size="10 MB" />
-                <TimeBasedTriggeringPolicy />
-            </Policies>
-        </RollingFile>
-    </Appenders>
+<layout class="org.apache.log4j.PatternLayout"> <param name="ConversionPattern" value="%d{yyyy-
+MM-dd HH:mm:ss} %l:%L - %m%n" /> </layout>
 
-    <Loggers>
-        <!-- LOG everything at INFO level -->
-        <Root level="info">
-            <AppenderRef ref="Console" />
-            <AppenderRef ref="RollingFile" />
-        </Root>
+</appender>
 
-        <!-- LOG "com.baeldung*" at TRACE level -->
-        <Logger name="com.baeldung" level="trace"></Logger>
-    </Loggers>
+<appender name="file" class="org.apache.log4j.RollingFileAppender">
+<param name="append" value="true" /> <param name="maxFileSize" value="10MB" />
+<param name="maxBackupIndex" value="10" /> <param name="file" value="C:/logs/formation.log"
+/>
 
+<layout class="org.apache.log4j.PatternLayout"> <param name="ConversionPattern" value="%d{yyyy-
+MM-dd HH:mm:ss} %l:%L - %m%n     " /></layout>
 
-</configuration>
+</appender>
+ 
+<root> <level value="DEBUG , WARN" /> <appender-ref ref="console" /> <appender-ref ref="file" /> </root>
+
+</log4j:configuration>

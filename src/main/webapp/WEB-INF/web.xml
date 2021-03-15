@@ -5,19 +5,11 @@
    http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
 
 
-	<listener>
-		<listener-class>Esprit.PiDev.Security.SessionListener</listener-class>
-	</listener>
+
  
  
 
 
-<session-config>
-	<session-timeout>1</session-timeout>
-	<cookie-config>
-		<max-age>60</max-age>
-	</cookie-config>
 
-</session-config>
   </web-app>
  

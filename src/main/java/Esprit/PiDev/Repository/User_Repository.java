@@ -15,8 +15,8 @@ import Esprit.PiDev.Entity.Dbo_User;
 @Repository
 public interface User_Repository extends JpaRepository<Dbo_User, Long> {
 
-	@Query("FROM Dbo_User WHERE email=:email")
-	Dbo_User findByEmail(@Param("email") String email);
+	 
+	Dbo_User findByEmail(  String email);
 	
 	@Query("select u.id FROM Dbo_User as u WHERE u.email = :Email")
 	Long findIDByEmail(@Param("Email") String Email);
@@ -26,6 +26,9 @@ public interface User_Repository extends JpaRepository<Dbo_User, Long> {
 	Optional<Dbo_User> findByFirstNameIgnoreCase(String firstName);
 
 	Optional<Dbo_User> findByLastNameIgnoreCase(String lastName);
+	
+	@Query("select u.actif FROM Dbo_User as u where u.email =:email")
+	boolean isActif(@Param("email") String email);
 	
 	@Transactional
 	@Modifying
@@ -42,6 +45,11 @@ public interface User_Repository extends JpaRepository<Dbo_User, Long> {
 	@Query("update Dbo_User u set u.Session_Id =:Session_Id  where u.id =:id ")
 	int updateUserSessionId( @Param("Session_Id") String Session_Id , @Param("id")  Long id);
 	
+	@Transactional
+	@Query("UPDATE Dbo_User u SET u.failedAttempt =:failedAttempt WHERE u.email =:email")
+    @Modifying
+    void updateFailedAttempts( @Param("failedAttempt") int failAttempts, @Param("email") String email);
+	
 	@Query("select u.Session_Id FROM Dbo_User as u WHERE u.id = :id ")
 	String getOldSessionId(@Param("id") Long id);
 
@@ -56,4 +64,10 @@ public interface User_Repository extends JpaRepository<Dbo_User, Long> {
 
 	Boolean existsByEmail(String email);
 	
+	@Query("SELECT u.accountNonLocked FROM Dbo_User u where u.email =:email")
+	Boolean getaccountNonLocked(@Param("email") String email);
+	
+	@Query(value = "SELECT u.failedAttempt FROM Dbo_User u where u.email =:email  ")
+	int  getfailedAttempt(@Param("email") String email);
+
 }
