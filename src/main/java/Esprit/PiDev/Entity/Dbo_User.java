@@ -1,14 +1,33 @@
 package Esprit.PiDev.Entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.sun.istack.NotNull;
-
-import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 
 @SuppressWarnings("ALL")
 @Entity
@@ -87,12 +106,45 @@ public class Dbo_User implements Serializable {
 
     @Column(name = "upload_dir")
     private String uploadDir;
+	@JsonIgnore
+	@OneToMany(mappedBy="sender")
+	private List<Message> Messagesender = new ArrayList<Message>();
+	@JsonIgnore
+	@OneToMany(mappedBy="receiver")
+	private List<Message> Messagereceiver = new ArrayList<Message>();
 
+	@OneToOne
+
+	private Satisfaction satisfactions;
 
 
     /*-----------------------****Getters_Setters_Methods()****-------------------------------------*/
 
-    public Set<Event> getEvents() {
+    public List<Message> getMessagesender() {
+		return Messagesender;
+	}
+
+	public void setMessagesender(List<Message> messagesender) {
+		Messagesender = messagesender;
+	}
+
+	public List<Message> getMessagereceiver() {
+		return Messagereceiver;
+	}
+
+	public void setMessagereceiver(List<Message> messagereceiver) {
+		Messagereceiver = messagereceiver;
+	}
+
+	public Satisfaction getSatisfactions() {
+		return satisfactions;
+	}
+
+	public void setSatisfactions(Satisfaction satisfactions) {
+		this.satisfactions = satisfactions;
+	}
+
+	public Set<Event> getEvents() {
         return events;
     }
 
@@ -318,7 +370,36 @@ public class Dbo_User implements Serializable {
     }
 
 
-    /*-----------------------****TO_String()****-------------------------------------*/
+    public Dbo_User(Long id, String firstName, String lastName, boolean actif, Date date, String email, String password,
+			Set<Dbo_Role> role, Date createdTime, Date lastLoggedIn, Date lastLoggedOut,
+			Dbo_User_Provider dbo_User_Provider, String session_Id, boolean accountNonLocked, int failedAttempt,
+			Date lockTime, Set<Event> events, String uploadDir, List<Message> messagesender,
+			List<Message> messagereceiver, Satisfaction satisfactions) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.actif = actif;
+		this.date = date;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+		this.createdTime = createdTime;
+		this.lastLoggedIn = lastLoggedIn;
+		this.lastLoggedOut = lastLoggedOut;
+		this.dbo_User_Provider = dbo_User_Provider;
+		Session_Id = session_Id;
+		this.accountNonLocked = accountNonLocked;
+		this.failedAttempt = failedAttempt;
+		this.lockTime = lockTime;
+		this.events = events;
+		this.uploadDir = uploadDir;
+		Messagesender = messagesender;
+		Messagereceiver = messagereceiver;
+		this.satisfactions = satisfactions;
+	}
+
+	/*-----------------------****TO_String()****-------------------------------------*/
     @Override
     public String toString() {
         return "Dbo_User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", actif=" + actif
