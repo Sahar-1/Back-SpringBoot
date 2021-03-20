@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: Esprit_PiDev
 Implementation-Version: 1.0
-Built-By: Ayoub
+Built-By: mouhamed
 Implementation-Vendor-Id: Esprit_PiDev
-Build-Jdk: 1.8.0_60
+Build-Jdk: 1.8.0_171
 Implementation-URL: https://spring.io/projects/spring-boot/Esprit_PiDe
  v
 Created-By: Maven Integration for Eclipse

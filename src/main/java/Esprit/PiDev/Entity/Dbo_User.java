@@ -18,7 +18,7 @@ public class Dbo_User implements Serializable {
     /**
      *
      */
-
+//dfhdfsdhf
     private static final long serialVersionUID = 1L;
     /*-----------------------****Bean_Attributes****-------------------------------------*/
     @Id
