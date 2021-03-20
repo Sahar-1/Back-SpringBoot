@@ -14,7 +14,7 @@ import Esprit.PiDev.Service.User_Service;
 
 @SpringBootTest
 class EspritPiDevApplicationTests {
-
+/*
 	@Test
 	void contextLoads() {
 
@@ -63,4 +63,7 @@ class EspritPiDevApplicationTests {
 	 * 
 	 * System.out.println("******** testAdd1*************"); }
 	 */
+	
+	
+
 }

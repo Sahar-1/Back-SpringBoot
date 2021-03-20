@@ -6,5 +6,7 @@ public enum ERole {
     ROLE_SOUDIRECTEUR,
     ROLE_ADMIN,
     ROLE_PARENT,
-    ROLE_ENFANT
+    ROLE_ENFANT,
+    ROLE_MEDECIN,
+    ROLE_CHAUFFEUR
 }
