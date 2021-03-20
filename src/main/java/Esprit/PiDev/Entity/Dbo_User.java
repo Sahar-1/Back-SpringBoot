@@ -116,6 +116,11 @@ public class Dbo_User implements Serializable {
 	private List<Message> Messagereceiver = new ArrayList<Message>();
 	@OneToOne
 	private Satisfaction satisfactions;
+	
+	
+	
+	@Column(name = "parent_id",nullable =true)
+	private Long parent_id;
 
 	/*-------------------------------association Garden et user--------------------------------------------------*/
 	@ManyToOne
