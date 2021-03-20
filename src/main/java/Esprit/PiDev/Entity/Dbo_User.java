@@ -38,6 +38,9 @@ public class Dbo_User implements Serializable {
 	 *
 	 */
 
+	/*
+	This's a simple check for last commit
+	 */
 	private static final long serialVersionUID = 1L;
 	/*-----------------------****Bean_Attributes****-------------------------------------*/
 	@Id
