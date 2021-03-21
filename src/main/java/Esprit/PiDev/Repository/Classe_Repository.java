@@ -18,13 +18,13 @@ public interface Classe_Repository extends CrudRepository<Classe,Integer> {
 	 List<Classe> findCapacite();
 	
 	@Query("select  c from Classe c join c.garden g  where  c.capacite > 0 and  g.id=:id_garden")
-	List<Classe> findCapacitebygarden( @Param("id_garden") int id_garden);
+	List<Classe> findCapacitebygarden( @Param("id_garden") Long id_garden);
 	
 	@Query("select  max(c.compteur)  from Classe c join c.garden g  where g.id=:id_garden  ")
-	int max_compteur_garden(@Param("id_garden") int id_garden);
+	int max_compteur_garden(@Param("id_garden") Long id_garden);
 	
 	@Query("select  count(c) from Classe c join c.garden g  where g.id=:id_garden  ")
-	int existe_garden_id(@Param("id_garden") int id_garden);
+	Long existe_garden_id(@Param("id_garden") Long id_garden);
 	
 	
 	

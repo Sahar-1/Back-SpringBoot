@@ -86,7 +86,7 @@ public class Garden_Controller {
 	// ****************************DeleteGarden************************************//
 	// @Secured(value ={"ROLE_ADMIN"})
 	@DeleteMapping("/DeleteGarden/{garden_id}")
-	public ResponseEntity<?> DeleteGarden(Authentication auth, @PathVariable int garden_id) {
+	public ResponseEntity<?> DeleteGarden(Authentication auth, @PathVariable Long garden_id) {
 
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
@@ -102,7 +102,7 @@ public class Garden_Controller {
 	// ****************************UpdateGarden************************************//
 	// @Secured(value ={"ROLE_ADMIN"})
 	@PutMapping("/UpdateGarden/{garden_id}")
-	public ResponseEntity<?> UpdateGarden(Authentication auth, @PathVariable int garden_id,@RequestBody Garden garden) {
+	public ResponseEntity<?> UpdateGarden(Authentication auth, @PathVariable Long garden_id,@RequestBody Garden garden) {
 
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
@@ -135,7 +135,7 @@ public class Garden_Controller {
 	@PostMapping("/affecter_enfant_parent_jardin/{garden_id}")
 	@ResponseBody
 	public ResponseEntity<?> affecter_enfant_parent_jardin(Authentication auth, @RequestBody HashSet<Dbo_User> users,
-			@PathVariable("garden_id") int garden_id) throws ParseException {
+			@PathVariable("garden_id") Long garden_id) throws ParseException {
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
 		return gardenService.affecter_enfant_parent_jardin(userDetails.getId(), users, garden_id);
@@ -159,7 +159,7 @@ public class Garden_Controller {
 	// ****************************select_parent_by_Garden********************************//
 	@Secured(value = { "ROLE_ADMIN" })
 	@GetMapping("/select_parent_by_Garden/{garden_id}")
-	public ResponseEntity<?> select_parent_by_Garden(Authentication auth, @PathVariable("garden_id") int garden_id) {
+	public ResponseEntity<?> select_parent_by_Garden(Authentication auth, @PathVariable("garden_id") Long garden_id) {
 		return gardenService.select_parent_by_Garden(garden_id);
 	}
 	// ****************************select_parent_by_Garden********************************//
@@ -170,7 +170,7 @@ public class Garden_Controller {
 	@Secured(value = { "ROLE_ADMIN" })
 	@GetMapping("/select_enfant_parent_by_Garden/{garden_id}/{parent_id}")
 	public ResponseEntity<?> select_enfant_parent_by_Garden(Authentication auth,
-			@PathVariable("garden_id") int garden_id, @PathVariable("parent_id") long parent_id) {
+			@PathVariable("garden_id") Long garden_id, @PathVariable("parent_id") long parent_id) {
 		return gardenService.select_enfant_parent_by_Garden(garden_id, parent_id);
 	}
 	// ****************************select_enfant_parent_by_Garden********************************//
@@ -180,7 +180,7 @@ public class Garden_Controller {
 		@Secured(value = { "ROLE_ADMIN" })
 		@GetMapping("/select_enfant_by_Garden/{garden_id}")
 		public ResponseEntity<?> select_enfant_by_Garden(Authentication auth,
-				@PathVariable("garden_id") int garden_id) {
+				@PathVariable("garden_id") Long garden_id) {
 			return gardenService.select_enfant_by_Garden(garden_id);
 		}
 		// ****************************select_enfant_by_Garden********************************//
