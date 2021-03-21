@@ -64,7 +64,7 @@ public class Bus_Controller {
 	// ****************************getAllBus_ByBus************************************//
 	// @Secured(value ={"ROLE_ADMIN"})
 	@GetMapping("/getAllBus_ByBus/{garden_id}")
-	public ResponseEntity<?> getAllBus_ByBus(Authentication auth,@PathVariable("garden_id") int garden_id) {
+	public ResponseEntity<?> getAllBus_ByBus(Authentication auth,@PathVariable("garden_id") Long garden_id) {
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
 		return busService.getAllBus_ByGarden(userDetails.getId(), garden_id);
@@ -77,7 +77,7 @@ public class Bus_Controller {
 	// ****************************ajouterBus_byGarden************************************//
 	// @Secured(value ={"ROLE_ADMIN"})
 	@PostMapping("/ajouterBus_byGarden/{garden_id}")
-	public ResponseEntity<?> ajouterBus_byGarden(Authentication auth, @RequestBody Bus Bus,@PathVariable("garden_id") int garden_id) {
+	public ResponseEntity<?> ajouterBus_byGarden(Authentication auth, @RequestBody Bus Bus,@PathVariable("garden_id") Long garden_id) {
 
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();

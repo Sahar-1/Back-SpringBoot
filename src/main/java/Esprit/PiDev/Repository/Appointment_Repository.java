@@ -23,6 +23,6 @@ public interface Appointment_Repository extends CrudRepository<Appointment, Inte
 	List<Appointment> find_appointment_byparent(@Param("parent_id") long parent_id);
 	
 	@Query("select a  from Appointment a  join a.garden g WHERE  a.date =:date and g.id =:garden_id ")
-	List<Appointment> find_date_appointment_bygarden(@Param("date") Date date,@Param("garden_id") int garden_id);
+	List<Appointment> find_date_appointment_bygarden(@Param("date") Date date,@Param("garden_id") Long garden_id);
 
 }

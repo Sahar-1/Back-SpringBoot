@@ -47,7 +47,7 @@ public class Bus_Service {
 	
 	//****************************************getAllBus_ByGarden******************************************************//
 
-	public ResponseEntity<?> getAllBus_ByGarden(long user_id,int garden_id) {
+	public ResponseEntity<?> getAllBus_ByGarden(long user_id,Long garden_id) {
 		Dbo_User dbo_User = ur1.findById(user_id).orElse(null);
 		 Garden garden =garden_Repository.findById(garden_id).orElse(null);
 		 List<Bus> bus = new ArrayList<>();
@@ -80,7 +80,7 @@ public class Bus_Service {
 	
 	
 
-	public ResponseEntity<?> ajouterBus_byGarden(long user_id, Bus bus,int garden_id) {
+	public ResponseEntity<?> ajouterBus_byGarden(long user_id, Bus bus,Long garden_id) {
 		Dbo_User dbo_User = ur1.findById(user_id).orElse(null);
 		 Garden garden =garden_Repository.findById(garden_id).orElse(null);
 
