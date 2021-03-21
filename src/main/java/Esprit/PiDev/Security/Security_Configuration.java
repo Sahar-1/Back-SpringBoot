@@ -59,7 +59,7 @@ public class Security_Configuration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable() .authorizeRequests().antMatchers( "/confirm-account","/generate","/Sign-In" , "/Sign-Up" ,  "/oauth2/**" , "/all" , "/forgot-password" , "/confirm-reset" , "/reset-password" , "/deleteCron", "/login").permitAll();
+		http.csrf().disable() .authorizeRequests().antMatchers( "/v1/payments/payment/123/execute","/payment/execute","/PAYPAL_SUCCESS_URL","/pay","/confirm-account","/generate","/Sign-In" , "/Sign-Up" ,  "/oauth2/**" , "/all" , "/forgot-password" , "/confirm-reset" , "/reset-password" , "/deleteCron", "/login").permitAll();
 
 				 
 
