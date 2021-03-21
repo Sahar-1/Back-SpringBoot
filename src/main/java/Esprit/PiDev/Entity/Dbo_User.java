@@ -17,7 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -116,11 +116,78 @@ public class Dbo_User implements Serializable {
 	private List<Message> Messagereceiver = new ArrayList<Message>();
 	@OneToOne
 	private Satisfaction satisfactions;
+	
+	
+	
+	@Column(name = "parent_id",nullable =true)
+	private Long parent_id;
+
+	/*-------------------------------association Garden et user--------------------------------------------------*/
+	@ManyToOne
+	private Garden garden;
+	/*-------------------------------association Garden et user--------------------------------------------------*/
+	
+	
+	
+/*-------------------------------association Appointment et user--------------------------------------------------*/
+	
+	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
+	private Set<Appointment> appointments;
+	
+	/*-------------------------------association Appointment et user--------------------------------------------------*/
+	
+	
+	
+	
+	
+	/*-------------------------------association Classe et user--------------------------------------------------*/
+
+	@ManyToOne
+	private Classe classe;
+	
+	/*-------------------------------association Classe et user--------------------------------------------------*/
+
+
+	/*-------------------------------association trajet et user(chauffeur)--------------------------------------------------*/
+	@OneToMany(mappedBy="dbo_User")
+	private Set<Trajet> trajets;
 
 	/*-----------------------****Getters_Setters_Methods()****-------------------------------------*/
 
 	public List<Message> getMessagesender() {
 		return Messagesender;
+	}
+
+	public Garden getGarden() {
+		return garden;
+	}
+
+	public void setGarden(Garden garden) {
+		this.garden = garden;
+	}
+
+	public Set<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(Set<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+
+	public Classe getClasse() {
+		return classe;
+	}
+
+	public void setClasse(Classe classe) {
+		this.classe = classe;
+	}
+
+	public Set<Trajet> getTrajets() {
+		return trajets;
+	}
+
+	public void setTrajets(Set<Trajet> trajets) {
+		this.trajets = trajets;
 	}
 
 	public void setMessagesender(List<Message> messagesender) {
@@ -399,6 +466,43 @@ public class Dbo_User implements Serializable {
 		Messagesender = messagesender;
 		Messagereceiver = messagereceiver;
 		this.satisfactions = satisfactions;
+	}
+	
+	
+	
+
+	public Dbo_User(Long id, String firstName, String lastName, boolean actif, Date date, String email, String password,
+			Set<Dbo_Role> role, Date createdTime, Date lastLoggedIn, Date lastLoggedOut,
+			Dbo_User_Provider dbo_User_Provider, String session_Id, boolean accountNonLocked, int failedAttempt,
+			Date lockTime, Set<Event> events, String uploadDir, List<Message> messagesender,
+			List<Message> messagereceiver, Satisfaction satisfactions, Garden garden, Set<Appointment> appointments,
+			Classe classe, Set<Trajet> trajets) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.actif = actif;
+		this.date = date;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+		this.createdTime = createdTime;
+		this.lastLoggedIn = lastLoggedIn;
+		this.lastLoggedOut = lastLoggedOut;
+		this.dbo_User_Provider = dbo_User_Provider;
+		Session_Id = session_Id;
+		this.accountNonLocked = accountNonLocked;
+		this.failedAttempt = failedAttempt;
+		this.lockTime = lockTime;
+		this.events = events;
+		this.uploadDir = uploadDir;
+		Messagesender = messagesender;
+		Messagereceiver = messagereceiver;
+		this.satisfactions = satisfactions;
+		this.garden = garden;
+		this.appointments = appointments;
+		this.classe = classe;
+		this.trajets = trajets;
 	}
 
 	/*-----------------------****TO_String()****-------------------------------------*/

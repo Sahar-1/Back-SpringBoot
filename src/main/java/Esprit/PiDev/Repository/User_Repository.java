@@ -1,6 +1,7 @@
 package Esprit.PiDev.Repository;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -69,5 +70,20 @@ public interface User_Repository extends JpaRepository<Dbo_User, Long> {
 	
 	@Query(value = "SELECT u.failedAttempt FROM Dbo_User u where u.email =:email  ")
 	int  getfailedAttempt(@Param("email") String email);
+	
+	
+	
+	/*--------afficher_enfant_byparent-----------------------------------------------*/
+	
+	
+	
+	@Query("select u FROM Dbo_User  u WHERE u.parent_id = :id")
+	List<Dbo_User> afficher_enfant_byparent(@Param("id") Long id);
+	
+
+	@Query("select u FROM Dbo_User  u join u.garden g WHERE u.parent_id = :id and g.id=:garden_id")
+	List<Dbo_User> afficher_enfant_byParent(@Param("id") Long id,@Param("garden_id") int garden_id);
+	
+	
 
 }
