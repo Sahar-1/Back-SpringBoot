@@ -1,0 +1,27 @@
+ ####### Google Properties #####
+ 
+      
+ spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id:     359142324982-i92qfg6u6m3qoteqalt8niu83rdpmhuj.apps.googleusercontent.com
+            client-secret: VMO1y6FPNgXh5pLuY8RS_VKs
+            scope: 
+            - email
+            - profile
+
+  
+          facebook:
+            client-id: 516480209317611
+            client-secret: 265b558fffbe4318d3a148f8295549aa
+            scope: 
+            - email
+            - public_profile 
+   
+     
+       
+           
+                 
