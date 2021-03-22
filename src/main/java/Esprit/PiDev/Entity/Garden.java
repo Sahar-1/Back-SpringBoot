@@ -1,9 +1,16 @@
 package Esprit.PiDev.Entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Garden implements Serializable {
@@ -18,7 +25,12 @@ public class Garden implements Serializable {
 	private String name;
 	private double price;
 
-	
+	 @ManyToOne
+		ForumSubject forumSubject;	
+		/*-------------------------------association Garden and bill--------------------------------------------------*/	
+ 
+	   @OneToMany(mappedBy="garden")
+	    List<Bill> bills ;
 	
 			
 	
@@ -80,6 +92,22 @@ public class Garden implements Serializable {
 		
 	}
 	
+	public ForumSubject getForumSubject() {
+		return forumSubject;
+	}
+
+	public void setForumSubject(ForumSubject forumSubject) {
+		this.forumSubject = forumSubject;
+	}
+
+	public List<Bill> getBills() {
+		return bills;
+	}
+
+	public void setBills(List<Bill> bills) {
+		this.bills = bills;
+	}
+
 	public Garden(String description, String location, int phone, String email) {
 		super();
 		this.description = description;
@@ -232,11 +260,6 @@ public class Garden implements Serializable {
 		this.activities = activities;
 	}
 
-	@Override
-	public String toString() {
-		return "Garden [id=" + id + ", description=" + description + ", location=" + location + ", phone=" + phone
-				+ ", email=" + email + ", users=" + users + "]";
-	}
 
 	public Set<Trajet> getTrajets() {
 		return trajets;
@@ -252,6 +275,35 @@ public class Garden implements Serializable {
 	}
 
 	public void setBus(Set<Bus> bus) {
+		this.bus = bus;
+	}
+
+	@Override
+	public String toString() {
+		return "Garden [id=" + id + ", description=" + description + ", location=" + location + ", phone=" + phone
+				+ ", email=" + email + ", name=" + name + ", price=" + price + ", forumSubject=" + forumSubject
+				+ ", bills=" + bills + ", users=" + users + ", classes=" + classes + ", appointments=" + appointments
+				+ ", activities=" + activities + ", trajets=" + trajets + ", bus=" + bus + "]";
+	}
+
+	public Garden(Long id, String description, String location, int phone, String email, String name, double price,
+			ForumSubject forumSubject, List<Bill> bills, Set<Dbo_User> users, Set<Classe> classes,
+			Set<Appointment> appointments, Set<Activity> activities, Set<Trajet> trajets, Set<Bus> bus) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.location = location;
+		this.phone = phone;
+		this.email = email;
+		this.name = name;
+		this.price = price;
+		this.forumSubject = forumSubject;
+		this.bills = bills;
+		this.users = users;
+		this.classes = classes;
+		this.appointments = appointments;
+		this.activities = activities;
+		this.trajets = trajets;
 		this.bus = bus;
 	}
 	

@@ -116,9 +116,42 @@ public class Dbo_User implements Serializable {
 	private List<Message> Messagereceiver = new ArrayList<Message>();
 	@OneToOne
 	private Satisfaction satisfactions;
+	/*-------------------------------association user and bill--------------------------------------------------*/	
+	@OneToMany(mappedBy="user")
+	List<Bill> bills;
+/*-------------------------------association user and Forum Comments--------------------------------------------------*/	
+	@OneToMany(mappedBy="user",fetch= FetchType.EAGER)
+	Set<ForumComment> forumComments;
+/*-------------------------------association user and Forum Subject--------------------------------------------------*/	
+
+	@ManyToOne
+	ForumSubject forumSubject;
 	
 	
-	
+	public List<Bill> getBills() {
+		return bills;
+	}
+
+	public void setBills(List<Bill> bills) {
+		this.bills = bills;
+	}
+
+	public Set<ForumComment> getForumComments() {
+		return forumComments;
+	}
+
+	public void setForumComments(Set<ForumComment> forumComments) {
+		this.forumComments = forumComments;
+	}
+
+	public ForumSubject getForumSubject() {
+		return forumSubject;
+	}
+
+	public void setForumSubject(ForumSubject forumSubject) {
+		this.forumSubject = forumSubject;
+	}
+
 	@Column(name = "parent_id",nullable =true)
 	private Long parent_id;
 
