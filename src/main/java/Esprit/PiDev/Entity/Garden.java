@@ -18,7 +18,8 @@ public class Garden implements Serializable {
 	private String name;
 	private double price;
 
-	
+	@OneToOne(mappedBy = "Garden")
+    private Contract Contract;
 	
 			
 	
@@ -34,7 +35,8 @@ public class Garden implements Serializable {
 	@OneToMany(mappedBy ="garden",fetch=FetchType.EAGER)
 	private Set<Classe>  classes;
 	/*-------------------------------association Garden et classe--------------------------------------------------*/
-	
+	@OneToMany(mappedBy="garden")
+	private Set<Claim> claims ;
 	
 /*-------------------------------association Garden et appointment--------------------------------------------------*/
 	
@@ -47,6 +49,22 @@ public class Garden implements Serializable {
 	
 	/*-------------------------------association Activity et Garden--------------------------------------------------*/
 	
+	public Contract getContract() {
+		return Contract;
+	}
+
+	public void setContract(Contract contract) {
+		Contract = contract;
+	}
+
+	public Set<Claim> getClaims() {
+		return claims;
+	}
+
+	public void setClaims(Set<Claim> claims) {
+		this.claims = claims;
+	}
+
 	@OneToMany(mappedBy="garden",fetch=FetchType.EAGER)
 	private Set<Activity> activities;
 	
