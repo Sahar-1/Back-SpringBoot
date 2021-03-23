@@ -11,7 +11,5 @@ import Esprit.PiDev.Entity.Satisfaction;
 public interface Satisfaction_Repository extends CrudRepository<Satisfaction, Long> {
  
 	
-	Satisfaction findByUser(Long id );
-	
 
 }

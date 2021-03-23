@@ -3,16 +3,13 @@ package Esprit.PiDev.Entity;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -31,14 +28,13 @@ public class Satisfaction {
     private String name;
 	@Temporal(TemporalType.DATE)	  
     private Date Satisfaction_Date;
-
-    @OneToOne
-	private Dbo_User user;
-    
-    
 	@ManyToMany
+	private List<Dbo_User> users;
+    @OneToMany(mappedBy="satisfactions",fetch=FetchType.EAGER)
 	private List<Question_Satisfaction> questions;
-	
+
+	/*-----------------------****Getters_Setters_Methods()****-------------------------------------*/
+
 	
 	public Long getId() {
 		return id;
@@ -58,37 +54,38 @@ public class Satisfaction {
 	public void setSatisfaction_Date(Date satisfaction_Date) {
 		Satisfaction_Date = satisfaction_Date;
 	}
-	public Dbo_User getUser() {
-		return user;
-	}
-	public void setUser(Dbo_User user) {
-		this.user = user;
-	}
+	
 	public List<Question_Satisfaction> getQuestions() {
 		return questions;
 	}
 	public void setQuestions(List<Question_Satisfaction> questions) {
 		this.questions = questions;
 	}
-	public Satisfaction(Long id, String name, Date satisfaction_Date, Dbo_User user,
+	
+	public List<Dbo_User> getUsers() {
+		return users;
+	}
+	public void setUsers(List<Dbo_User> users) {
+		this.users = users;
+	}
+	public Satisfaction() {
+		super();
+	}
+	public Satisfaction(Long id, String name, Date satisfaction_Date, List<Dbo_User> users,
 			List<Question_Satisfaction> questions) {
 		super();
 		this.id = id;
 		this.name = name;
 		Satisfaction_Date = satisfaction_Date;
-		this.user = user;
+		this.users = users;
 		this.questions = questions;
 	}
 	@Override
 	public String toString() {
-		return "Satisfaction [id=" + id + ", name=" + name + ", Satisfaction_Date=" + Satisfaction_Date + ", user="
-				+ user + ", questions=" + questions + "]";
-	}
-	public Satisfaction() {
-		super();
+		return "Satisfaction [id=" + id + ", name=" + name + ", Satisfaction_Date=" + Satisfaction_Date + ", users="
+				+ users + ", questions=" + questions + "]";
 	}
 	
-	/*-----------------------****Getters_Setters_Methods()****-------------------------------------*/
 
 	
    

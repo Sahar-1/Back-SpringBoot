@@ -138,4 +138,9 @@ public ResponseEntity<?> retrieveAllMessages(Long user_id) {
 		return ResponseEntity.ok(new MessageResponse("athhh"));
 }
 
+@Override
+public ResponseEntity<?> OpenConversation(Long user_id, Long reciever) {
+	// TODO Auto-generated method stub
+	return ResponseEntity.ok(new MessageResponse("conversations  "+(List<Message>)msg_rep.Conversations(user_id, reciever)));
+}
 }
