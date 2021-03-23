@@ -52,7 +52,7 @@ public class Trajet_Service {
 
 	//****************************************getAllChauffeur_ByGarden******************************************************//
 
-	public ResponseEntity<?> getAllChauffeur_ByGarden(long user_id,int garden_id) {
+	public ResponseEntity<?> getAllChauffeur_ByGarden(long user_id,Long garden_id) {
 		Dbo_User dbo_User = ur1.findById(user_id).orElse(null);
 		 Garden garden =garden_Repository.findById(garden_id).orElse(null);
 		 List<Dbo_User> dbo_Users = new ArrayList<>();
@@ -83,7 +83,7 @@ public class Trajet_Service {
 	
 	//****************************************getAllClasse_ByGarden******************************************************//
 
-		public ResponseEntity<?> getAllClasse_ByGarden(long user_id,int garden_id) {
+		public ResponseEntity<?> getAllClasse_ByGarden(long user_id,Long garden_id) {
 			Dbo_User dbo_User = ur1.findById(user_id).orElse(null);
 			 Garden garden =garden_Repository.findById(garden_id).orElse(null);
 			 List<Classe> classes = new ArrayList<>();
@@ -117,7 +117,7 @@ public class Trajet_Service {
 		
 		//****************************************getAllTrajets_ByGarden_ByChauffeur******************************************************//
 
-				public ResponseEntity<?> getAllTrajets_ByGarden_ByChauffeur(long user_id,int garden_id) {
+				public ResponseEntity<?> getAllTrajets_ByGarden_ByChauffeur(long user_id,Long garden_id) {
 					Dbo_User dbo_User = ur1.findById(user_id).orElse(null);
 					 Garden garden =garden_Repository.findById(garden_id).orElse(null);
 					 List<Trajet> trajets = new ArrayList<>();
@@ -168,7 +168,7 @@ public class Trajet_Service {
 		
 		//****************************************getAllBus_ByGarden******************************************************//
 
-				public ResponseEntity<?> getAllBus_ByGarden(long user_id,int garden_id) {
+				public ResponseEntity<?> getAllBus_ByGarden(long user_id,Long garden_id) {
 					Dbo_User dbo_User = ur1.findById(user_id).orElse(null);
 					 Garden garden =garden_Repository.findById(garden_id).orElse(null);
 					 List<Bus> bus = new ArrayList<>();
@@ -200,7 +200,7 @@ public class Trajet_Service {
 	
 	
 	//****************************************ajouterTrajet_byGarden******************************************************//
-	public ResponseEntity<?> ajouterTrajet_byGarden(long user_id, Trajet trajet,int garden_id,int classe_id,long chauffeur_id,int bus_id) {
+	public ResponseEntity<?> ajouterTrajet_byGarden(long user_id, Trajet trajet,Long garden_id,int classe_id,long chauffeur_id,int bus_id) {
 			Dbo_User dbo_User = ur1.findById(user_id).orElse(null);
 			Dbo_User dbo_User_chauffeur = ur1.findById(chauffeur_id).orElse(null);
 			 Garden garden =garden_Repository.findById(garden_id).orElse(null);

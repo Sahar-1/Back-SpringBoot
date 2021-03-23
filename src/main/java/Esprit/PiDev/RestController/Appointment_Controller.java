@@ -56,7 +56,7 @@ public class Appointment_Controller {
 	// ****************************ajouter_Parent_rendezVous********************************//
 //	@Secured(value = {"PARENT"})
 	@PostMapping("/ajouter_Parent_rendezVous/{garden_id}")
-	public ResponseEntity<?> ajouter_Parent_rendezVous(Authentication auth,@PathVariable("garden_id") int garden_id,@RequestBody Appointment appointment) throws ParseException {
+	public ResponseEntity<?> ajouter_Parent_rendezVous(Authentication auth,@PathVariable("garden_id") Long garden_id,@RequestBody Appointment appointment) throws ParseException {
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
 		return appointmentService.ajouter_Parent_rendezVous(userDetails.getId(),garden_id,appointment);
@@ -69,7 +69,7 @@ public class Appointment_Controller {
 	// ****************************ajouter_admin_rendezVous********************************//
 //	@Secured(value = {"PARENT"})
 	@PostMapping("/ajouter_admin_rendezVous/{garden_id}/{parent_id}")
-	public ResponseEntity<?> ajouter_admin_rendezVous(Authentication auth,@PathVariable("garden_id") int garden_id,@PathVariable("parent_id") int parent_id,@RequestBody Appointment appointment) throws ParseException {
+	public ResponseEntity<?> ajouter_admin_rendezVous(Authentication auth,@PathVariable("garden_id") Long garden_id,@PathVariable("parent_id") int parent_id,@RequestBody Appointment appointment) throws ParseException {
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
 		return appointmentService.ajouter_admin_rendezVous(userDetails.getId(),parent_id,garden_id,appointment);
@@ -83,7 +83,7 @@ public class Appointment_Controller {
 		
 		//****************************************getall_appointment_bygarden******************************************************//
 		@GetMapping("/getall_appointment_bygarden/{garden_id}")
-		public ResponseEntity<?> getall_appointment_bygarden(Authentication auth,@PathVariable("garden_id") int garden_id) throws ParseException {
+		public ResponseEntity<?> getall_appointment_bygarden(Authentication auth,@PathVariable("garden_id") Long garden_id) throws ParseException {
 			SecurityContextHolder.getContext().setAuthentication(auth);
 			Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
 			return appointmentService.getall_appointment_bygarden(userDetails.getId(),garden_id);
@@ -236,7 +236,7 @@ public class Appointment_Controller {
 
 			//****************************************lister_date_disponible_bygarden******************************************************//
 			@GetMapping("/lister_date_disponible_bygarden/{id_garden}/{date}")
-			public ResponseEntity<?> lister_date_disponible_bygarden(Authentication auth,@PathVariable("id_garden") int id_garden,@PathVariable("date") String date) throws ParseException {
+			public ResponseEntity<?> lister_date_disponible_bygarden(Authentication auth,@PathVariable("id_garden") Long id_garden,@PathVariable("date") String date) throws ParseException {
 				SecurityContextHolder.getContext().setAuthentication(auth);
 				Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
 				return appointmentService.lister_date_disponible_bygarden(userDetails.getId(),id_garden,date);

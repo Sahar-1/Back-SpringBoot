@@ -25,7 +25,7 @@ public class Trajet_Controller {
 	// ****************************ajouterTrajet_byGarden********************************//
 //		@Secured(value = {"PARENT"})
 		@PostMapping("/ajouterTrajet_byGarden/{garden_id}/{classe_id}/{chauffeur_id}/{bus_id}")
-		public ResponseEntity<?> ajouter_Parent_rendezVous(Authentication auth,@PathVariable("garden_id") int garden_id,@PathVariable("classe_id") int classe_id,@PathVariable("chauffeur_id") long chauffeur_id,@PathVariable("bus_id") int bus_id,@RequestBody Trajet trajet) throws ParseException {
+		public ResponseEntity<?> ajouter_Parent_rendezVous(Authentication auth,@PathVariable("garden_id") Long garden_id,@PathVariable("classe_id") int classe_id,@PathVariable("chauffeur_id") long chauffeur_id,@PathVariable("bus_id") int bus_id,@RequestBody Trajet trajet) throws ParseException {
 			SecurityContextHolder.getContext().setAuthentication(auth);
 			Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
 			return trajetService.ajouterTrajet_byGarden(userDetails.getId(),trajet,garden_id,classe_id,chauffeur_id,bus_id);
@@ -38,7 +38,7 @@ public class Trajet_Controller {
 		// ****************************getAllChauffeur_ByGarden********************************//
 //		@Secured(value = {"PARENT"})
 		@GetMapping("/getAllChauffeur_ByGarden/{garden_id}")
-		public ResponseEntity<?> getAllChauffeur_ByGarden(Authentication auth,@PathVariable("garden_id") int garden_id) throws ParseException {
+		public ResponseEntity<?> getAllChauffeur_ByGarden(Authentication auth,@PathVariable("garden_id") Long garden_id) throws ParseException {
 			SecurityContextHolder.getContext().setAuthentication(auth);
 			Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
 			return trajetService.getAllChauffeur_ByGarden(userDetails.getId(),garden_id);
@@ -50,7 +50,7 @@ public class Trajet_Controller {
 		// ****************************getAllClasse_ByGarden********************************//
 //		@Secured(value = {"PARENT"})
 		@GetMapping("/getAllClasse_ByGarden/{garden_id}")
-		public ResponseEntity<?> getAllClasse_ByGarden(Authentication auth,@PathVariable("garden_id") int garden_id) throws ParseException {
+		public ResponseEntity<?> getAllClasse_ByGarden(Authentication auth,@PathVariable("garden_id") Long garden_id) throws ParseException {
 			SecurityContextHolder.getContext().setAuthentication(auth);
 			Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
 			return trajetService.getAllClasse_ByGarden(userDetails.getId(),garden_id);
@@ -84,7 +84,7 @@ public class Trajet_Controller {
 		// ****************************getAllTrajets_ByGarden_ByChauffeur********************************//
 //		@Secured(value = {"PARENT"})
 		@GetMapping("/getAllTrajets_ByGarden_ByChauffeur/{garden_id}")
-		public ResponseEntity<?> getAllTrajets_ByGarden_ByChauffeur(Authentication auth,@PathVariable("garden_id") int garden_id) throws ParseException {
+		public ResponseEntity<?> getAllTrajets_ByGarden_ByChauffeur(Authentication auth,@PathVariable("garden_id") Long garden_id) throws ParseException {
 			SecurityContextHolder.getContext().setAuthentication(auth);
 			Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
 			return trajetService.getAllTrajets_ByGarden_ByChauffeur(userDetails.getId(),garden_id);

@@ -54,7 +54,7 @@ public class Appointment_Service {
 	
 	//****************************************ajouter_Parent_rendezVous******************************************************//
 
-	public ResponseEntity<?> ajouter_Parent_rendezVous(Long id_parent, int garden_id,Appointment appointment) {
+	public ResponseEntity<?> ajouter_Parent_rendezVous(Long id_parent, Long garden_id,Appointment appointment) {
 
 		// TODO Auto-generated method stub
 		Dbo_User dbo_User = ur1.findById(id_parent).orElse(null);
@@ -104,7 +104,7 @@ public class Appointment_Service {
 	
 	//****************************************ajouter_admin_rendezVous******************************************************//
 
-		public ResponseEntity<?> ajouter_admin_rendezVous(Long id_admin, int id_parent, int garden_id,Appointment appointment) {
+		public ResponseEntity<?> ajouter_admin_rendezVous(Long id_admin, int id_parent, Long garden_id,Appointment appointment) {
 		
 			Dbo_User dbo_User = ur1.findById(id_admin).orElse(null);
 			Garden garden = garden_Repository.findById(garden_id).orElse(null);
@@ -151,7 +151,7 @@ public class Appointment_Service {
 		
 		//****************************************getall_appointment_bygarden******************************************************//
 
-				public ResponseEntity<?> getall_appointment_bygarden(Long user_id,int garden_id) {
+				public ResponseEntity<?> getall_appointment_bygarden(Long user_id,Long garden_id) {
 					Dbo_User dbo_User = ur1.findById(user_id).orElse(null);
 					Garden garden = garden_Repository.findById(garden_id).orElse(null);
 					List<Appointment> appointments = new ArrayList<>();
@@ -508,7 +508,7 @@ public class Appointment_Service {
 				
 				//****************************************lister_date_disponible_bygarden******************************************************//
 
-				public ResponseEntity<?> lister_date_disponible_bygarden(Long user_id,int id_garden,String date) throws ParseException {
+				public ResponseEntity<?> lister_date_disponible_bygarden(Long user_id,Long id_garden,String date) throws ParseException {
 				
 					Dbo_User dbo_User = ur1.findById(user_id).orElse(null);
 					Garden garden = garden_Repository.findById(id_garden).orElse(null);

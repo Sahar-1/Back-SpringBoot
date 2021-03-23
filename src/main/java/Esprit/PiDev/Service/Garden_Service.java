@@ -147,7 +147,7 @@ public class Garden_Service {
 
 	}
 
-	public ResponseEntity<?> DeleteGarden(long user_id, int garden_id) {
+	public ResponseEntity<?> DeleteGarden(long user_id, Long garden_id) {
 		Dbo_User dbo_User = ur1.findById(user_id).orElse(null);
 		if (dbo_User.getRole().stream().anyMatch(e -> e.getName().equals(ERole.ROLE_ADMIN))) {
 			 Garden garden =garden_Repository.findById(garden_id).orElse(null);
@@ -167,7 +167,7 @@ public class Garden_Service {
 
 	}
 	
-	public ResponseEntity<?> UpdateGarden(long user_id, int garden_id,Garden garden) {
+	public ResponseEntity<?> UpdateGarden(long user_id, Long garden_id,Garden garden) {
 		Dbo_User dbo_User = ur1.findById(user_id).orElse(null);
 		if (dbo_User.getRole().stream().anyMatch(e -> e.getName().equals(ERole.ROLE_ADMIN))) {
 			 Garden garden_To_Update =garden_Repository.findById(garden_id).orElse(null);
@@ -228,11 +228,11 @@ public class Garden_Service {
 
 	}
 
-	public ResponseEntity<?> affecter_enfant_parent_jardin(long id_parent, HashSet<Dbo_User> users, int garden_id)
+	public ResponseEntity<?> affecter_enfant_parent_jardin(long id_parent, HashSet<Dbo_User> users, Long garden_id)
 			throws ParseException {
 
 		List<Classe> listclasses = (List<Classe>) classe_Repository.findAll();
-		int trouve = classe_Repository.existe_garden_id(garden_id);
+		Long trouve = classe_Repository.existe_garden_id(garden_id);
 
 		Dbo_User dbo_User = ur1.findById(id_parent).orElse(null);
 		Garden garden = garden_Repository.findById(garden_id).orElse(null);
@@ -336,7 +336,7 @@ public class Garden_Service {
 		return null;
 	}
 
-	public ResponseEntity<?> afficher_enfant_byparent(Long id_parent, int garden) {
+	public ResponseEntity<?> afficher_enfant_byparent(Long id_parent, Long garden) {
 
 		Dbo_User dbo_User = ur1.findById(id_parent).orElse(null);
 		if (dbo_User.getRole().stream().anyMatch(e -> e.getName().equals(ERole.ROLE_PARENT))) {
@@ -351,7 +351,7 @@ public class Garden_Service {
 		return null;
 	}
 
-	public ResponseEntity<?> select_parent_by_Garden(int id) {
+	public ResponseEntity<?> select_parent_by_Garden(Long id) {
 		List<Dbo_User> dbo_Users = new ArrayList<>();
 		for (Long element : garden_Repository.select_parent_by_Garden(id)) {
 
@@ -363,7 +363,7 @@ public class Garden_Service {
 
 	}
 
-	public ResponseEntity<?> select_enfant_parent_by_Garden(int garden_id, long parent_id1) {
+	public ResponseEntity<?> select_enfant_parent_by_Garden(Long garden_id, long parent_id1) {
 
 		List<Long> list = garden_Repository.select_parent_by_Garden(garden_id);
 		if (list.contains(parent_id1)) {
@@ -375,7 +375,7 @@ public class Garden_Service {
 		// return ur1.afficher_enfant_byparent(parent_id1);
 	}
 
-	public ResponseEntity<?> select_enfant_by_Garden(int garden_id) {
+	public ResponseEntity<?> select_enfant_by_Garden(Long garden_id) {
 	List<Dbo_User> dbo_Users = new ArrayList<>();
 	
 	Garden garden = garden_Repository.findById(garden_id).orElse(null);
@@ -405,6 +405,30 @@ public class Garden_Service {
 	}
 
 	
+	public List<Dbo_User> select_enfant_parent_by_Garden(long garden_id, long parent_id1) {
+		List<Dbo_User> list1 = null ;
+		List<Long> list = garden_Repository.select_parent_by_Garden(garden_id);
+		if (list.contains(parent_id1)) {
+
+			list1= (List<Dbo_User>)afficher_enfant_byparent(parent_id1, garden_id);
+		} 
+			
+return list1;
+		// return ur1.afficher_enfant_byparent(parent_id1);
+	}
+	public List<Dbo_User> afficher_enfant_byparent(long id_parent, int garden) {
+		List<Dbo_User> list = null ;
+		Dbo_User dbo_User = ur1.findById(id_parent).orElse(null);
+		if (dbo_User.getRole().stream().anyMatch(e -> e.getName().equals(ERole.ROLE_PARENT))) {
+
+			list =ur1.afficher_enfant_byParent(id_parent, garden);
+		}
+		return list;
+		
+		
+
+		
+	}
 
 	
 	

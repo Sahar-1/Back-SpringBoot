@@ -17,9 +17,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.*;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -114,11 +114,46 @@ public class Dbo_User implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "receiver")
 	private List<Message> Messagereceiver = new ArrayList<Message>();
+
 	@ManyToMany(mappedBy = "users")
 	private List<Satisfaction> satisfactions;
+
+	/*-------------------------------association user and bill--------------------------------------------------*/	
+	@OneToMany(mappedBy="user")
+	List<Bill> bills;
+/*-------------------------------association user and Forum Comments--------------------------------------------------*/	
+	@OneToMany(mappedBy="user",fetch= FetchType.EAGER)
+	Set<ForumComment> forumComments;
+/*-------------------------------association user and Forum Subject--------------------------------------------------*/	
+
+	@ManyToOne
+	ForumSubject forumSubject;
 	
 	
-	
+	public List<Bill> getBills() {
+		return bills;
+	}
+
+	public void setBills(List<Bill> bills) {
+		this.bills = bills;
+	}
+
+	public Set<ForumComment> getForumComments() {
+		return forumComments;
+	}
+
+	public void setForumComments(Set<ForumComment> forumComments) {
+		this.forumComments = forumComments;
+	}
+
+	public ForumSubject getForumSubject() {
+		return forumSubject;
+	}
+
+	public void setForumSubject(ForumSubject forumSubject) {
+		this.forumSubject = forumSubject;
+	}
+
 	@Column(name = "parent_id",nullable =true)
 	private Long parent_id;
 
@@ -129,7 +164,7 @@ public class Dbo_User implements Serializable {
 	
 	
 	
-/*-------------------------------association Appointment et user--------------------------------------------------*/
+   /*-------------------------------association Appointment et user--------------------------------------------------*/
 	
 	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
 	private Set<Appointment> appointments;
