@@ -1,18 +1,13 @@
 package Esprit.PiDev.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import Esprit.PiDev.InterfaceService.Question_Satisfaction_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import Esprit.PiDev.Entity.Answer_Satisfaction;
 import Esprit.PiDev.Entity.Dbo_User;
 import Esprit.PiDev.Entity.ERole;
 import Esprit.PiDev.Entity.Question_Satisfaction;
-import Esprit.PiDev.Entity.Review;
-import Esprit.PiDev.Entity.Satisfaction;
 import Esprit.PiDev.Entity.RequestApiForm.MessageResponse;
 import Esprit.PiDev.Repository.Answer_Repository;
 import Esprit.PiDev.Repository.Question_Satisfaction_Repository;

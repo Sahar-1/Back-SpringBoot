@@ -1,4 +1,4 @@
-package Esprit.PiDev.Service;
+package Esprit.PiDev.InterfaceService;
 
 import org.springframework.http.ResponseEntity;
 

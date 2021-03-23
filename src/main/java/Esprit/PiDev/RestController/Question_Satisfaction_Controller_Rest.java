@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import Esprit.PiDev.Entity.Question_Satisfaction;
-import Esprit.PiDev.Service.Question_Satisfaction_Service;
+import Esprit.PiDev.InterfaceService.Question_Satisfaction_Service;
 import Esprit.PiDev.Service.Session_UserDetails;
 
 @RestController

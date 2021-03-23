@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import Esprit.PiDev.Entity.Message;
 import Esprit.PiDev.Repository.User_Repository;
-import Esprit.PiDev.Service.Message_Service;
+import Esprit.PiDev.InterfaceService.Message_Service;
 import Esprit.PiDev.Service.Session_UserDetails;
 
 @RestController

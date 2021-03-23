@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import Esprit.PiDev.Entity.Review;
 import Esprit.PiDev.Entity.Satisfaction;
 import Esprit.PiDev.Repository.Question_Satisfaction_Repository;
-import Esprit.PiDev.Service.Satisfaction_Service;
+import Esprit.PiDev.InterfaceService.Satisfaction_Service;
 import Esprit.PiDev.Service.Session_UserDetails;
 
 @RestController
