@@ -8,18 +8,22 @@ import Esprit.PiDev.Entity.Contract;
 import Esprit.PiDev.Entity.Dbo_User;
 import Esprit.PiDev.Entity.ERole;
 import Esprit.PiDev.Entity.Garden;
+import Esprit.PiDev.Entity.Plan;
 import Esprit.PiDev.Entity.RequestApiForm.MessageResponse;
 import Esprit.PiDev.InterfaceService.Contract_Service;
 import Esprit.PiDev.Repository.Contract_Repository;
 import Esprit.PiDev.Repository.Garden_Repository;
+import Esprit.PiDev.Repository.Plan_Repository;
 import Esprit.PiDev.Repository.User_Repository;
+
 @Service
 public class Contract_Service_Impl  implements Contract_Service{
 	@Autowired
 	Contract_Repository cnt_rep;
 	@Autowired
 	Garden_Repository gard_rep;
-	
+	@Autowired
+	Plan_Repository pln_rep;
 	@Autowired
 	User_Repository ur1;
 	public ResponseEntity<?> Add_Contract(long user_id,Contract C, Long idgarden)
@@ -120,5 +124,13 @@ public class Contract_Service_Impl  implements Contract_Service{
 		 cnt_rep.save(cont);
 	}
 	
-	
+	@Override
+	public void affecterPlanAContrat(Long Contract_id, Long Plan_Id) {
+	 
+		Contract c =cnt_rep.findById(Contract_id).orElse(null);
+		Plan p =pln_rep.findById(Plan_Id).orElse(null);
+		p.setContract(c);
+		pln_rep.save(p);
+		
+	}
 }

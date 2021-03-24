@@ -139,6 +139,7 @@ public  class Claim_Service_Imlp  implements Claim_Service{
 	public ResponseEntity<?> Retrieve_All_Claims(long user_id, Long id_garden) {
 		Dbo_User dbo_User = ur1.findById(user_id).orElse(null);
 		Garden garden =gard_rep.findById(id_garden).orElse(null);
+		System.out.println(garden.toString());
 
 		if (dbo_User.getRole().stream().anyMatch(e -> e.getName().equals(ERole.ROLE_ADMIN))){
 		//List <Claim> claims= (List<Claim>) garden.getClaims();
@@ -245,6 +246,17 @@ public  class Claim_Service_Imlp  implements Claim_Service{
 		}
 	
 		}
+	
+	
+	@Override
+	public List<Claim> getLastReclamations(long user_id) {
+		Dbo_User user = ur1.findById(user_id).orElse(null);
+		return Cl_rep.findLastReclamationsByUser(user);
+	}
+	
+	public List<Claim> searchclaim(String msg) {
+		return Cl_rep.searchClaim(msg);
+	}
 }
 	
 	
@@ -256,20 +268,6 @@ public  class Claim_Service_Imlp  implements Claim_Service{
 	
 	
 		
-	/*@Override
-	public Claim Retrieve_Claim(Long id) {
-		// TODO Auto-generated method stub
-		return Cl_rep.findById(id).get() ;
-	}
-
-
-	@Override
-	public void Delete_Claim_Id(Long id) {
-		// TODO Auto-generated method stub
-		
-	}*/
-
-
 	
 
 

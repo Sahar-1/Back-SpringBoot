@@ -1,5 +1,7 @@
 package Esprit.PiDev.RestController;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import Esprit.PiDev.Entity.Claim;
+import Esprit.PiDev.Entity.Dbo_User;
 import Esprit.PiDev.InterfaceService.Claim_Service;
 import Esprit.PiDev.InterfaceService.Interface_User_Service;
 import Esprit.PiDev.Repository.Claim_Repository;
@@ -66,7 +69,7 @@ public class ClaimRestController {
 		return clm_serv.affectation_Claim_2(userDetails.getId(), claim,garden_id);
 	}
 	@GetMapping("/Retrieve_All_Claims/{id_garden}")
-	public ResponseEntity<?> retrieve_all_claims(org.springframework.security.core.Authentication auth, @RequestBody Claim claim,@PathVariable Long id_garden)
+	public ResponseEntity<?> retrieve_all_claims(org.springframework.security.core.Authentication auth,@PathVariable Long id_garden)
   {
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
@@ -92,12 +95,24 @@ public class ClaimRestController {
  
 	
 	@GetMapping("/investisment/{id_garden}")
-	public ResponseEntity<?>investisment (org.springframework.security.core.Authentication auth,@PathVariable("id_garden") Long id_garden)
+	public ResponseEntity<?> investisment (org.springframework.security.core.Authentication auth,@PathVariable("id_garden") Long id_garden)
 	{
-
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
 	return 	clm_serv.investisment(userDetails.getId(), id_garden);
 	}
+	@GetMapping("/getLastReclamations/{userid}")
+	public List<Claim> getLastReclamations(@PathVariable("userid") Long userid) 
+	{	
+		
+		return clm_serv.getLastReclamations(userid);
+		
+	}
+	@GetMapping("/searchclaimbyusername/{username}")
+	public List<Claim> searchclaimbyusername(@PathVariable("username") String username)
+	{
+		return clm_serv.searchclaim(username);
+	}
+	
 	
 }

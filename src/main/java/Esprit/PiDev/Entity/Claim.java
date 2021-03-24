@@ -1,9 +1,8 @@
 package Esprit.PiDev.Entity;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,10 +14,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "T_Claim")
@@ -32,20 +33,33 @@ private static final long serialVersionUID = 1L;
 	@Column(name = "Claim_id")
 	private Long id;
 	@Temporal(TemporalType.DATE)
-	private Date Date;
+	private Date Date=Calendar.getInstance().getTime();
 	@Enumerated(EnumType.STRING)
 	@Column(name = "Priorty")
 	private Priorty Priorty;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "Claim_category")
+	private Claim_category Claim_category;
 	private String state;
 	@Column(columnDefinition="varchar(1000)",name="discription")
 	private String Discription;
 	@Column(name="rating")
 	private int Rating ;
 	private  String claimname;
+	@JsonIgnore
 	@ManyToOne 
 	private Garden  garden;
+	
+	@JsonIgnore
 	@ManyToOne
 	private Dbo_User user;
+	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "recipient_id")
+	private Dbo_User recipient;
+
+	
 	public Long getId() {
 		return id;
 	}
@@ -57,6 +71,13 @@ private static final long serialVersionUID = 1L;
 	}
 	public void setDate(Date date) {
 		Date = date;
+	}
+	
+	public Claim_category getClaim_category() {
+		return Claim_category;
+	}
+	public void setClaim_category(Claim_category claim_category) {
+		Claim_category = claim_category;
 	}
 	public Priorty getPriorty() {
 		return Priorty;
@@ -102,6 +123,22 @@ private static final long serialVersionUID = 1L;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+	public Claim(Long id, java.util.Date date, Esprit.PiDev.Entity.Priorty priorty,
+			Esprit.PiDev.Entity.Claim_category claim_category, String state, String discription, int rating,
+			String claimname, Garden garden, Dbo_User user) {
+		super();
+		this.id = id;
+		Date = date;
+		Priorty = priorty;
+		Claim_category = claim_category;
+		this.state = state;
+		Discription = discription;
+		Rating = rating;
+		this.claimname = claimname;
+		this.garden = garden;
+		this.user = user;
 	}
 	public Claim(Long id, java.util.Date date, Priorty priorty, String state, String discription,
 			int rating, String claimname, Garden garden, Dbo_User user) {

@@ -16,6 +16,7 @@ public interface Contract_Service {
 	*/
 	Contract Retrieve_Contract(Long id);
 	public void promo(Contract cont);
+	public void affecterPlanAContrat(Long Contract_id, Long Plan_Id);
 }
 
 	

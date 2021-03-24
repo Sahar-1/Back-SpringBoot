@@ -122,15 +122,27 @@ public class Dbo_User implements Serializable {
 	@Column(name = "parent_id",nullable =true)
 	private Long parent_id;
 
+	
 	/*-------------------------------association Garden et user--------------------------------------------------*/
+	@JsonIgnore
 	@ManyToOne
 	private Garden garden;
 	/*-------------------------------association Garden et user--------------------------------------------------*/
-	
+	@JsonIgnore
+	@OneToMany(mappedBy="user")
+	private Set<Claim> claims ;
 	
 	
 /*-------------------------------association Appointment et user--------------------------------------------------*/
 	
+	public Set<Claim> getClaims() {
+		return claims;
+	}
+
+	public void setClaims(Set<Claim> claims) {
+		this.claims = claims;
+	}
+
 	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
 	private Set<Appointment> appointments;
 	

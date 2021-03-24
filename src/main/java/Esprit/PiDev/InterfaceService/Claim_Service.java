@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import Esprit.PiDev.Entity.Claim;
+import Esprit.PiDev.Entity.Dbo_User;
 
 public interface Claim_Service {
 
@@ -18,9 +19,9 @@ public interface Claim_Service {
 	public ResponseEntity<?> Validate_Claim(long user_id, int claim_id,Claim claim);
 	public ResponseEntity<?>investisment (long user_id, Long id_garden);
 
+	public List<Claim> getLastReclamations(long user_id);
 	
-	
-	
+	public List<Claim> searchclaim(String msg);
 	
 	
 	
