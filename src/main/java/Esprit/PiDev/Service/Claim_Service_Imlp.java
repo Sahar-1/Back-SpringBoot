@@ -1,3 +1,6 @@
+//Claim_Service_impl.java
+
+
 package Esprit.PiDev.Service;
 
 import java.util.ArrayList;
@@ -258,16 +261,3 @@ public  class Claim_Service_Imlp  implements Claim_Service{
 		return Cl_rep.searchClaim(msg);
 	}
 }
-	
-	
-	
-	
-
-
-	
-	
-	
-		
-	
-
-

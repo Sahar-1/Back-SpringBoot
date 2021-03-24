@@ -18,5 +18,3 @@ public interface Contract_Service {
 	public void promo(Contract cont);
 	public void affecterPlanAContrat(Long Contract_id, Long Plan_Id);
 }
-
-	

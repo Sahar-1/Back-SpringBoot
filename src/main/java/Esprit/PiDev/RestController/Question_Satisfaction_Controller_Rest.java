@@ -1,7 +1,5 @@
 package Esprit.PiDev.RestController;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -16,50 +14,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import Esprit.PiDev.Entity.Question_Satisfaction;
-import Esprit.PiDev.Entity.Review;
-import Esprit.PiDev.Service.Question_Satisfaction_Service;
+import Esprit.PiDev.InterfaceService.Question_Satisfaction_Service;
 import Esprit.PiDev.Service.Session_UserDetails;
 
 @RestController
 @RequestMapping("/question")
 public class Question_Satisfaction_Controller_Rest {
 	@Autowired
-	Question_Satisfaction_Service questionservice;
-	
-	   @GetMapping("/retrieve-all-questions")
-	    List<Question_Satisfaction> Question(Authentication auth) {
-			SecurityContextHolder.getContext().setAuthentication(auth);
-			Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
-	          List<Question_Satisfaction> list = questionservice.retrieveAllQuestions();
-	          return list;
-	   } 
-	
-	   @GetMapping("/retrieve-question/{question-id}")
-	   public void retrieveQuestion(@PathVariable("question-id") Long id) {
-		   questionservice.findQuestionById(id);
-	   } 
-	   
-	   
-	   @PostMapping("/add-question")
-	   public ResponseEntity<?>  addReaction(Authentication auth,@RequestBody Question_Satisfaction question) {
-			SecurityContextHolder.getContext().setAuthentication(auth);
-			Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
-		   return  questionservice.addQuestion(question); 
-	   }
+	Question_Satisfaction_Service question_Service;
 
-	   @DeleteMapping("/remove-question/{question-id}") 
-	public void  removeReaction(Authentication auth,@PathVariable("question-id") Long id)
-	   {
-			SecurityContextHolder.getContext().setAuthentication(auth);
-			Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
-		   questionservice.deleteQuestionById(id);
-	   } 
+	// ****************************getAllQuestion************************************//
+	// @Secured(value ={"ROLE_ADMIN"})
+	@GetMapping("/getAllQuestion")
+	public ResponseEntity<?> getAllQuestions(Authentication auth) {
+		SecurityContextHolder.getContext().setAuthentication(auth);
+		Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
+		return question_Service.getAllQuestions(userDetails.getId());
 
-	   @PutMapping("/modify-question/{rev}") 
-		public void   modifyReaction(@RequestBody Question_Satisfaction question,@PathVariable("rev") Review rev) {
-		   questionservice.saveOrUpdate(question,rev);
-	   }
+	}
+
 	
-	
+
+	@PostMapping("/addQuestion/{id_sat}")
+	public ResponseEntity<?> AddQuestion(Authentication auth, @RequestBody Question_Satisfaction question,
+			@PathVariable("id_sat") Long idsat) {
+
+		SecurityContextHolder.getContext().setAuthentication(auth);
+		Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
+		return question_Service.addQuestion(userDetails.getId(), question, idsat);
+	}
+
+	@DeleteMapping("/deleteQuestionById/{question_id}")
+	public ResponseEntity<?> DeleteQuestionById(Authentication auth, @PathVariable Long question_id) {
+
+		SecurityContextHolder.getContext().setAuthentication(auth);
+		Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
+		return question_Service.deleteQuestionById(userDetails.getId(), question_id);
+	}
+
+	@PutMapping("/Updatequestion/{question_id}")
+	public ResponseEntity<?> Updatequestion(Authentication auth, @PathVariable Long question_id,
+			@RequestBody Question_Satisfaction question) {
+
+		SecurityContextHolder.getContext().setAuthentication(auth);
+		Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
+		return question_Service.UpdateQuestion(userDetails.getId(), question_id, question);
+	}
+
 	
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import Esprit.PiDev.Entity.Message;
 import Esprit.PiDev.Repository.User_Repository;
-import Esprit.PiDev.Service.Message_Service;
+import Esprit.PiDev.InterfaceService.Message_Service;
 import Esprit.PiDev.Service.Session_UserDetails;
 
 @RestController
@@ -56,10 +56,17 @@ public class MessageController {
 		   } 
 	
 	   @GetMapping("/retrieve-all-Messages")
-	   public ResponseEntity<?> Question(Authentication auth) {
+	   public ResponseEntity<?> retrieveallMessages(Authentication auth) {
 			SecurityContextHolder.getContext().setAuthentication(auth);
 			Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
 	          
 	      	return ResponseEntity.ok("done"+ messageservice.retrieveAllMessages(userDetails.getId())); 
+	   } 
+	   @GetMapping("/retrieve-conversation/{reciever_id}")
+	   public ResponseEntity<?> conversation(Authentication auth,@PathVariable("reciever_id") Long reciever_id) {
+			SecurityContextHolder.getContext().setAuthentication(auth);
+			Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
+	          
+	      	return ResponseEntity.ok("done"+ messageservice.OpenConversation(userDetails.getId(), reciever_id)); 
 	   } 
 }

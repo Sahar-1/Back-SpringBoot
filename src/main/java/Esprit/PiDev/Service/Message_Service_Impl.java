@@ -3,6 +3,7 @@ package Esprit.PiDev.Service;
 import java.util.Date;
 import java.util.List;
 
+import Esprit.PiDev.InterfaceService.Message_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import Esprit.PiDev.Repository.Message_Repository;
 import Esprit.PiDev.Repository.User_Repository;
 
 @Service
-public class Message_Service_Impl  implements Message_Service{
+public class Message_Service_Impl  implements Message_Service {
 	@Autowired
 	User_Repository us_rep;
 	@Autowired
@@ -138,4 +139,9 @@ public ResponseEntity<?> retrieveAllMessages(Long user_id) {
 		return ResponseEntity.ok(new MessageResponse("athhh"));
 }
 
+@Override
+public ResponseEntity<?> OpenConversation(Long user_id, Long reciever) {
+	// TODO Auto-generated method stub
+	return ResponseEntity.ok(new MessageResponse("conversations  "+(List<Message>)msg_rep.Conversations(user_id, reciever)));
+}
 }

@@ -405,6 +405,30 @@ public class Garden_Service {
 	}
 
 	
+	public List<Dbo_User> select_enfant_parent_by_Garden(long garden_id, long parent_id1) {
+		List<Dbo_User> list1 = null ;
+		List<Long> list = garden_Repository.select_parent_by_Garden(garden_id);
+		if (list.contains(parent_id1)) {
+
+			list1= (List<Dbo_User>)afficher_enfant_byparent(parent_id1, garden_id);
+		} 
+			
+return list1;
+		// return ur1.afficher_enfant_byparent(parent_id1);
+	}
+	public List<Dbo_User> afficher_enfant_byparent(long id_parent, int garden) {
+		List<Dbo_User> list = null ;
+		Dbo_User dbo_User = ur1.findById(id_parent).orElse(null);
+		if (dbo_User.getRole().stream().anyMatch(e -> e.getName().equals(ERole.ROLE_PARENT))) {
+
+			list =ur1.afficher_enfant_byParent(id_parent, garden);
+		}
+		return list;
+		
+		
+
+		
+	}
 
 	
 	

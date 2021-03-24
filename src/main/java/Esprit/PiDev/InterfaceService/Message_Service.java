@@ -1,4 +1,4 @@
-package Esprit.PiDev.Service;
+package Esprit.PiDev.InterfaceService;
 
 import java.util.List;
 
@@ -13,4 +13,8 @@ public interface Message_Service {
 	public ResponseEntity<?> findMessageById(Long id,Long user_id);
 	public ResponseEntity<?> deleteMessageById(Long id,Long user_id);
 	public ResponseEntity<?> deleteMessage(Message msg,Long user_id);
+	public ResponseEntity<?> OpenConversation(Long user_id,Long reciever);
+	
+	
+	
 }

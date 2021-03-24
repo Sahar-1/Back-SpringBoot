@@ -1,3 +1,6 @@
+// claim.java 
+
+
 package Esprit.PiDev.Entity;
 
 import java.io.Serializable;
@@ -166,4 +169,4 @@ private static final long serialVersionUID = 1L;
 	
 	
 	
-}
+} 

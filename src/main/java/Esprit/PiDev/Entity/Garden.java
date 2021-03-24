@@ -1,12 +1,25 @@
 package Esprit.PiDev.Entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Garden implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -18,37 +31,37 @@ public class Garden implements Serializable {
 	private String name;
 	private double price;
 
+	@ManyToOne
+	ForumSubject forumSubject;
+	/*-------------------------------association Garden and bill--------------------------------------------------*/
+
+	@OneToMany(mappedBy = "garden")
+	List<Bill> bills;
 	@OneToOne(mappedBy = "Garden")
-    private Contract Contract;
-	
-			
-	
-/*-------------------------------association Garden et user--------------------------------------------------*/
-	
-	@OneToMany(mappedBy ="garden",fetch=FetchType.EAGER)
-	private Set<Dbo_User>  users;
+	private Contract Contract;
+
 	/*-------------------------------association Garden et user--------------------------------------------------*/
-	
-	
-/*-------------------------------association Garden et classe--------------------------------------------------*/
-	
-	@OneToMany(mappedBy ="garden",fetch=FetchType.EAGER)
-	private Set<Classe>  classes;
+
+	@OneToMany(mappedBy = "garden", fetch = FetchType.EAGER)
+	private Set<Dbo_User> users;
+	/*-------------------------------association Garden et user--------------------------------------------------*/
+
 	/*-------------------------------association Garden et classe--------------------------------------------------*/
-	@OneToMany(mappedBy="garden")
-	private Set<Claim> claims ;
-	
-/*-------------------------------association Garden et appointment--------------------------------------------------*/
-	
-	@OneToMany(mappedBy ="garden",fetch=FetchType.EAGER)
-	private Set<Appointment>  appointments;
+
+	@OneToMany(mappedBy = "garden", fetch = FetchType.EAGER)
+	private Set<Classe> classes;
+	/*-------------------------------association Garden et classe--------------------------------------------------*/
+	@OneToMany(mappedBy = "garden")
+	private Set<Claim> claims;
+
 	/*-------------------------------association Garden et appointment--------------------------------------------------*/
-	
-	
-	
-	
+
+	@OneToMany(mappedBy = "garden", fetch = FetchType.EAGER)
+	private Set<Appointment> appointments;
+	/*-------------------------------association Garden et appointment--------------------------------------------------*/
+
 	/*-------------------------------association Activity et Garden--------------------------------------------------*/
-	
+
 	public Contract getContract() {
 		return Contract;
 	}
@@ -65,39 +78,44 @@ public class Garden implements Serializable {
 		this.claims = claims;
 	}
 
-	@OneToMany(mappedBy="garden",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "garden", fetch = FetchType.EAGER)
 	private Set<Activity> activities;
-	
-	
-	
+
 	/*-------------------------------association Activity et Garden--------------------------------------------------*/
 
-	
-	
 	/*-------------------------------association trajet et garden--------------------------------------------------*/
 
-	@OneToMany(mappedBy="garden",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "garden", fetch = FetchType.EAGER)
 	private Set<Trajet> trajets;
-	
+
 	/*-------------------------------association trajet et garden--------------------------------------------------*/
-	
 
-
-	
-	
 	/*-------------------------------association bus et garden--------------------------------------------------*/
-	@OneToMany(mappedBy="garden",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "garden", fetch = FetchType.EAGER)
 	private Set<Bus> bus;
-	
+
 	/*-------------------------------association bus et garden--------------------------------------------------*/
 
-	
-	
-	public Garden()
-	{
-		
+	public Garden() {
+
 	}
-	
+
+	public ForumSubject getForumSubject() {
+		return forumSubject;
+	}
+
+	public void setForumSubject(ForumSubject forumSubject) {
+		this.forumSubject = forumSubject;
+	}
+
+	public List<Bill> getBills() {
+		return bills;
+	}
+
+	public void setBills(List<Bill> bills) {
+		this.bills = bills;
+	}
+
 	public Garden(String description, String location, int phone, String email) {
 		super();
 		this.description = description;
@@ -112,8 +130,6 @@ public class Garden implements Serializable {
 		this.phone = phone;
 		this.email = email;
 	}
-	
-	
 
 	public Garden(String description, String location, int phone, String email, String name, double price,
 			Set<Dbo_User> users, Set<Classe> classes) {
@@ -127,7 +143,7 @@ public class Garden implements Serializable {
 		this.users = users;
 		this.classes = classes;
 	}
-	
+
 	public Garden(String description, String location, int phone, String email, String name, double price) {
 		super();
 		this.description = description;
@@ -137,6 +153,7 @@ public class Garden implements Serializable {
 		this.name = name;
 		this.price = price;
 	}
+
 	public Garden(String description, String location, int phone, String email, String name) {
 		super();
 		this.description = description;
@@ -185,11 +202,6 @@ public class Garden implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	
-	
-	
 
 	public Set<Dbo_User> getUsers() {
 		return users;
@@ -206,9 +218,6 @@ public class Garden implements Serializable {
 	public void setClasses(Set<Classe> classes) {
 		this.classes = classes;
 	}
-	
-	
-	
 
 	public String getName() {
 		return name;
@@ -217,12 +226,6 @@ public class Garden implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
-
-	
-	
-	
 
 	public double getPrice() {
 		return price;
@@ -240,20 +243,12 @@ public class Garden implements Serializable {
 		this.appointments = appointments;
 	}
 
-	
-	
 	public Set<Activity> getActivities() {
 		return activities;
 	}
 
 	public void setActivities(Set<Activity> activities) {
 		this.activities = activities;
-	}
-
-	@Override
-	public String toString() {
-		return "Garden [id=" + id + ", description=" + description + ", location=" + location + ", phone=" + phone
-				+ ", email=" + email + ", users=" + users + "]";
 	}
 
 	public Set<Trajet> getTrajets() {
@@ -264,7 +259,6 @@ public class Garden implements Serializable {
 		this.trajets = trajets;
 	}
 
-
 	public Set<Bus> getBus() {
 		return bus;
 	}
@@ -272,14 +266,34 @@ public class Garden implements Serializable {
 	public void setBus(Set<Bus> bus) {
 		this.bus = bus;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "Garden [id=" + id + ", description=" + description + ", location=" + location + ", phone=" + phone
+				+ ", email=" + email + ", name=" + name + ", price=" + price + ", forumSubject=" + forumSubject
+				+ ", bills=" + bills + ", users=" + users + ", classes=" + classes + ", appointments=" + appointments
+				+ ", activities=" + activities + ", trajets=" + trajets + ", bus=" + bus + "]";
+	}
+
+	public Garden(Long id, String description, String location, int phone, String email, String name, double price,
+			ForumSubject forumSubject, List<Bill> bills, Set<Dbo_User> users, Set<Classe> classes,
+			Set<Appointment> appointments, Set<Activity> activities, Set<Trajet> trajets, Set<Bus> bus) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.location = location;
+		this.phone = phone;
+		this.email = email;
+		this.name = name;
+		this.price = price;
+		this.forumSubject = forumSubject;
+		this.bills = bills;
+		this.users = users;
+		this.classes = classes;
+		this.appointments = appointments;
+		this.activities = activities;
+		this.trajets = trajets;
+		this.bus = bus;
+	}
 
 }
