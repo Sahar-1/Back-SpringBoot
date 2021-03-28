@@ -7,17 +7,17 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -49,14 +49,14 @@ public class ForumSubject implements Serializable{
 	
 	/*-------------------------------association ForumSubject and forumComment  --------------------------------------------------*/
 
-	@OneToMany(mappedBy="forumSubject"/*,fetch= FetchType.EAGER*/)
+	@OneToMany(mappedBy="forumSubject")
 	List<ForumComment> forumComments;
 
-	@OneToMany(mappedBy="forumSubject"/*,fetch= FetchType.EAGER*/)
-	Set<Dbo_User> users;
+	@ManyToOne
+	private Dbo_User user;
 
-	@OneToMany(mappedBy="forumSubject")
-	List<Garden> gardens;
+	@ManyToOne
+	private Garden garden;
 
 
 
@@ -83,27 +83,31 @@ public class ForumSubject implements Serializable{
 	}
 
 
-	public Set<Dbo_User> getUsers() {
-		return users;
-	}
-
-
-	public void setUsers(Set<Dbo_User> users) {
-		this.users = users;
-	}
-
-
+	
 
 
 	
 
-	public List<Garden> getGardens() {
-		return gardens;
+	
+
+
+	public Dbo_User getUser() {
+		return user;
 	}
 
 
-	public void setGardens(List<Garden> gardens) {
-		this.gardens = gardens;
+	public void setUser(Dbo_User user) {
+		this.user = user;
+	}
+
+
+	public Garden getGarden() {
+		return garden;
+	}
+
+
+	public void setGarden(Garden garden) {
+		this.garden = garden;
 	}
 
 

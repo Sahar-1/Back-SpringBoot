@@ -124,8 +124,9 @@ public class Dbo_User implements Serializable {
 	Set<ForumComment> forumComments;
 /*-------------------------------association user and Forum Subject--------------------------------------------------*/	
 
-	@ManyToOne
-	ForumSubject forumSubject;
+	@OneToMany(mappedBy = "user")
+	List<ForumSubject> forumSubjects;
+	
 	
 	
 	public List<Bill> getBills() {
@@ -144,13 +145,6 @@ public class Dbo_User implements Serializable {
 		this.forumComments = forumComments;
 	}
 
-	public ForumSubject getForumSubject() {
-		return forumSubject;
-	}
-
-	public void setForumSubject(ForumSubject forumSubject) {
-		this.forumSubject = forumSubject;
-	}
 
 	@Column(name = "parent_id",nullable =true)
 	private Long parent_id;
@@ -189,6 +183,22 @@ public class Dbo_User implements Serializable {
 
 	public List<Message> getMessagesender() {
 		return Messagesender;
+	}
+
+	public List<ForumSubject> getForumSubjects() {
+		return forumSubjects;
+	}
+
+	public void setForumSubjects(List<ForumSubject> forumSubjects) {
+		this.forumSubjects = forumSubjects;
+	}
+
+	public Long getParent_id() {
+		return parent_id;
+	}
+
+	public void setParent_id(Long parent_id) {
+		this.parent_id = parent_id;
 	}
 
 	public Garden getGarden() {
@@ -422,6 +432,46 @@ public class Dbo_User implements Serializable {
 	/*-----------------------****Constructors_Object****-------------------------------------*/
 	public Dbo_User() {
 		super();
+	}
+	
+
+	public Dbo_User(Long id, String firstName, String lastName, boolean actif, Date date, String email, String password,
+			Set<Dbo_Role> role, Date createdTime, Date lastLoggedIn, Date lastLoggedOut,
+			Dbo_User_Provider dbo_User_Provider, String session_Id, boolean accountNonLocked, int failedAttempt,
+			Date lockTime, Set<Event> events, String uploadDir, List<Message> messagesender,
+			List<Message> messagereceiver, Satisfaction satisfactions, List<Bill> bills,
+			Set<ForumComment> forumComments, List<ForumSubject> forumSubjects, Long parent_id, Garden garden,
+			Set<Appointment> appointments, Classe classe, Set<Trajet> trajets) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.actif = actif;
+		this.date = date;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+		this.createdTime = createdTime;
+		this.lastLoggedIn = lastLoggedIn;
+		this.lastLoggedOut = lastLoggedOut;
+		this.dbo_User_Provider = dbo_User_Provider;
+		Session_Id = session_Id;
+		this.accountNonLocked = accountNonLocked;
+		this.failedAttempt = failedAttempt;
+		this.lockTime = lockTime;
+		this.events = events;
+		this.uploadDir = uploadDir;
+		Messagesender = messagesender;
+		Messagereceiver = messagereceiver;
+		this.satisfactions = satisfactions;
+		this.bills = bills;
+		this.forumComments = forumComments;
+		this.forumSubjects = forumSubjects;
+		this.parent_id = parent_id;
+		this.garden = garden;
+		this.appointments = appointments;
+		this.classe = classe;
+		this.trajets = trajets;
 	}
 
 	public Dbo_User(Long id, String firstName, String lastName, boolean actif, Date date, String email,
