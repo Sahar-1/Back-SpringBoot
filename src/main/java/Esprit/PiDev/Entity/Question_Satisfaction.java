@@ -1,6 +1,7 @@
 package Esprit.PiDev.Entity;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -8,11 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "T_Question_Satisfaction")
@@ -26,11 +29,10 @@ public class Question_Satisfaction {
 	private String question_Sat;
 	@Temporal(TemporalType.DATE)
 	private  Date dateOfCreation;
-    @ManyToOne
-	private Dbo_User user;
-	@ManyToOne
-	private Satisfaction satisfactions;
+	@ManyToMany
+	private List<Satisfaction> satisfactions;
 	@OneToMany(mappedBy="question")
+	@JsonIgnore
 	private Set<Answer_Satisfaction> answers;
 
 
@@ -61,36 +63,28 @@ public class Question_Satisfaction {
 	public void setDateOfCreation(Date dateOfCreation) {
 		this.dateOfCreation = dateOfCreation;
 	}
-	public Dbo_User getUser() {
-		return user;
-	}
-	public void setUser(Dbo_User user) {
-		this.user = user;
-	}
-	public Satisfaction getSatisfactions() {
+	public List<Satisfaction> getSatisfactions() {
 		return satisfactions;
 	}
-	public void setSatisfactions(Satisfaction satisfactions) {
+	public void setSatisfactions(List<Satisfaction> satisfactions) {
 		this.satisfactions = satisfactions;
 	}
-
-	public Question_Satisfaction(Long id, String question_Sat, Date dateOfCreation, Dbo_User user,
-			Satisfaction satisfactions, Set<Answer_Satisfaction> answers) {
+	public Question_Satisfaction(Long id, String question_Sat, Date dateOfCreation, List<Satisfaction> satisfactions,
+			Set<Answer_Satisfaction> answers) {
 		super();
 		this.id = id;
 		this.question_Sat = question_Sat;
 		this.dateOfCreation = dateOfCreation;
-		this.user = user;
 		this.satisfactions = satisfactions;
 		this.answers = answers;
 	}
-	@Override
-	public String toString() {
-		return "Question_Satisfaction [id=" + id + ", question_Sat=" + question_Sat + ", dateOfCreation="
-				+ dateOfCreation + ", user=" + user + ", satisfactions=" + satisfactions + ", answers=" + answers + "]";
-	}
 
 	
-	
+
+
+
+
+
+
 	
 }

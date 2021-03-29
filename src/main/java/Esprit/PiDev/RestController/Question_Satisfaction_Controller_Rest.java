@@ -21,7 +21,7 @@ import Esprit.PiDev.Service.Session_UserDetails;
 @RequestMapping("/question")
 public class Question_Satisfaction_Controller_Rest {
 	@Autowired
-	Question_Satisfaction_Service question_Service;
+	private	Question_Satisfaction_Service question_Service;
 
 	// ****************************getAllQuestion************************************//
 	// @Secured(value ={"ROLE_ADMIN"})
@@ -35,13 +35,12 @@ public class Question_Satisfaction_Controller_Rest {
 
 	
 
-	@PostMapping("/addQuestion/{id_sat}")
-	public ResponseEntity<?> AddQuestion(Authentication auth, @RequestBody Question_Satisfaction question,
-			@PathVariable("id_sat") Long idsat) {
+	@PostMapping("/addQuestion")
+	public ResponseEntity<?> AddQuestion(Authentication auth, @RequestBody Question_Satisfaction question) {
 
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
-		return question_Service.addQuestion(userDetails.getId(), question, idsat);
+		return question_Service.addQuestion(userDetails.getId(), question);
 	}
 
 	@DeleteMapping("/deleteQuestionById/{question_id}")

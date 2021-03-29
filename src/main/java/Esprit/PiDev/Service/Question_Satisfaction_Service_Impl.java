@@ -24,14 +24,14 @@ public class Question_Satisfaction_Service_Impl implements Question_Satisfaction
 	
 
 	@Autowired
-	Question_Satisfaction_Repository question_Repository;
+	private Question_Satisfaction_Repository question_Repository;
 
 	@Autowired
-	User_Repository ur1;
+	private User_Repository ur1;
 	@Autowired
-	User_Service us;
+	private 	User_Service us;
 	@Autowired
-	User_Role_Service ur;
+	private User_Role_Service ur;
 	
 	@Autowired
 	Satisfaction_Repository sat_rep;
@@ -59,21 +59,21 @@ public class Question_Satisfaction_Service_Impl implements Question_Satisfaction
 	
 	
 	@Override
-	public ResponseEntity<?> addQuestion(Long user_id, Question_Satisfaction question,Long idsat) {
+	public ResponseEntity<?> addQuestion(Long user_id, Question_Satisfaction question) {
 		Dbo_User dbo_User = ur1.findById(user_id).orElse(null);
-		//Satisfaction satisfaction = sat_rep.findById(idsat).orElse(null);
 		
 		if (dbo_User.getRole().stream().anyMatch(e -> e.getName().equals(ERole.ROLE_ADMIN))) {
-			Question_Satisfaction question1 = question_Repository.findById(question.getId()).get();
-			if (question1 != null) {
-				return ResponseEntity.ok(new MessageResponse("question existe "));
-
+			List<Question_Satisfaction> quess=new ArrayList<>();
+			question_Repository.findAll().forEach(quess::add);
+			if (!quess.contains(question)) 
+			{
+				question_Repository.save(question);
+				return ResponseEntity.ok(new MessageResponse("question est bien enregistrer"));
 			}
 
 			else {
-			//	question.setSatisfactions(satisfaction);
-				question_Repository.save(question);
-				return ResponseEntity.ok(new MessageResponse("question est bien enregistrer"));
+
+				return ResponseEntity.ok(new MessageResponse("question existe "));
 
 			}
 

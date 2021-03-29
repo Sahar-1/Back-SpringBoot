@@ -114,9 +114,10 @@ public class Dbo_User implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "receiver")
 	private List<Message> Messagereceiver = new ArrayList<Message>();
-
-	@ManyToMany(mappedBy = "users")
-	private List<Satisfaction> satisfactions;
+	@OneToMany(mappedBy = "user")
+	private List<Answer_Satisfaction> answers;
+	@ManyToMany
+	private Set<Satisfaction> satisfactions;
 
 	/*-------------------------------association user and bill--------------------------------------------------*/	
 	@OneToMany(mappedBy="user")
@@ -140,6 +141,14 @@ public class Dbo_User implements Serializable {
 
 	public Set<ForumComment> getForumComments() {
 		return forumComments;
+	}
+
+	public List<Answer_Satisfaction> getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(List<Answer_Satisfaction> answers) {
+		this.answers = answers;
 	}
 
 	public void setForumComments(Set<ForumComment> forumComments) {
@@ -415,11 +424,11 @@ public class Dbo_User implements Serializable {
 		this.uploadDir = uploadDir;
 	}
 
-	public List<Satisfaction> getSatisfactions() {
+	public Set<Satisfaction> getSatisfactions() {
 		return satisfactions;
 	}
 
-	public void setSatisfactions(List<Satisfaction> satisfactions) {
+	public void setSatisfactions(Set<Satisfaction> satisfactions) {
 		this.satisfactions = satisfactions;
 	}
 
@@ -481,7 +490,7 @@ public class Dbo_User implements Serializable {
 			Set<Dbo_Role> role, Date createdTime, Date lastLoggedIn, Date lastLoggedOut,
 			Dbo_User_Provider dbo_User_Provider, String session_Id, boolean accountNonLocked, int failedAttempt,
 			Date lockTime, Set<Event> events, String uploadDir, List<Message> messagesender,
-			List<Message> messagereceiver, List<Satisfaction> satisfactions, Long parent_id, Garden garden,
+			List<Message> messagereceiver, Set<Satisfaction> satisfactions, Long parent_id, Garden garden,
 			Set<Appointment> appointments, Classe classe, Set<Trajet> trajets) {
 		super();
 		this.id = id;
@@ -512,12 +521,9 @@ public class Dbo_User implements Serializable {
 		this.trajets = trajets;
 	}
 
+
 	/*-----------------------****TO_String()****-------------------------------------*/
-	@Override
-	public String toString() {
-		return "Dbo_User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", actif=" + actif
-				+ ", date=" + date + ", email=" + email + ", password=" + password + "]";
-	}
+
 	/*------------------------------------------------------------*/
 
 }
