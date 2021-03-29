@@ -479,7 +479,7 @@ public class Dbo_User implements Serializable {
 		this.uploadDir = uploadDir;
 		Messagesender = messagesender;
 		Messagereceiver = messagereceiver;
-		this.satisfactions = satisfactions;
+
 		this.bills = bills;
 		this.forumComments = forumComments;
 		this.forumSubjects = forumSubjects;
