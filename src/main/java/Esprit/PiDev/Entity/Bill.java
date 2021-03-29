@@ -55,6 +55,10 @@ public class Bill implements Serializable{
 	private String userpk;
 	@Transient
 	private String gardenpk;
+	@Transient
+	private String amount_payed;
+	@Transient
+	private String amount_not_payed;
 	
 	
 	/*-------------------------------association bill and user--------------------------------------------------*/
@@ -131,6 +135,36 @@ public class Bill implements Serializable{
 
 	public Long getId() {
 		return id;
+	}
+
+
+	public double getAmount() {
+		return amount;
+	}
+
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+
+	public String getAmount_payed() {
+		return amount_payed;
+	}
+
+
+	public void setAmount_payed(String amount_payed) {
+		this.amount_payed = amount_payed;
+	}
+
+
+	public String getAmount_not_payed() {
+		return amount_not_payed;
+	}
+
+
+	public void setAmount_not_payed(String amount_not_payed) {
+		this.amount_not_payed = amount_not_payed;
 	}
 
 

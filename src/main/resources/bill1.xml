@@ -22,6 +22,8 @@
 	<field name="discount" class="java.lang.Float"/>
 	<field name="userpk" class="java.lang.String"/>
 	<field name="gardenpk" class="java.lang.String"/>
+	<field name="amount_payed" class="java.lang.String"/>
+	<field name="amount_not_payed" class="java.lang.String"/>
 	<background>
 		<band/>
 	</background>
