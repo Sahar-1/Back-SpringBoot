@@ -82,7 +82,7 @@ public interface User_Repository extends JpaRepository<Dbo_User, Long> {
 	
 
 	@Query("select u FROM Dbo_User  u join u.garden g WHERE u.parent_id = :id and g.id=:garden_id")
-	List<Dbo_User> afficher_enfant_byParent(@Param("id") Long id,@Param("garden_id") int garden_id);
+	List<Dbo_User> afficher_enfant_byParent(@Param("id") Long id,@Param("garden_id") Long garden_id);
 	
 	
 

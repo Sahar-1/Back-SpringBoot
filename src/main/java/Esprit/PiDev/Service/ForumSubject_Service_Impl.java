@@ -64,10 +64,9 @@ public class ForumSubject_Service_Impl implements Interface_Forum_Subject_Servic
 			
 			
 			
-			ForumSubject subject = frep.findById(idSubject).orElse(null);
-			dbo_User.setForumSubject(subject);
+			ForumSubject sujet_To_Update = frep.findById(idSubject).orElse(null);
+			dbo_User.getForumSubjects().add(sujet_To_Update);
 			
-			ForumSubject sujet_To_Update =dbo_User.getForumSubject();
 		
 			
 			

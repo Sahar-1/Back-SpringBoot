@@ -5,8 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,8 +37,6 @@ public class ForumComment implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date postedDate;
 	
-	/*@Enumerated(EnumType.STRING)
-	private Bad_Words Bad_Words;*/
 	
 	/*-------------------------------association forumComment and ForumSubject--------------------------------------------------*/
 	@ManyToOne

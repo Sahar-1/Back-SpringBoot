@@ -231,6 +231,82 @@ public ResponseEntity<?>   Add_Forum(ForumComment u ,Long idsubject , Long iduse
 
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public ResponseEntity<?> StatistiqueCommentSubjectbyUser(Long user_id, Long iduserforum, String question) 
+	{
+		// TODO Auto-generated method stub
+		Dbo_User dbo_User = usrep.findById(user_id).orElse(null);
+		Dbo_User userforum = usrep.findById(iduserforum).orElse(null);
+
+	
+
+		if (dbo_User.getRole().stream().anyMatch(e -> e.getName().equals(ERole.ROLE_ADMIN))) {
+       
+	
+			
+			
+			String response = "";
+
+			for (ForumSubject forum : userforum.getForumSubjects()) {
+
+float countcom = (ForumRp.countsubjectquetions(forum.getId(),question) / ForumRp.countComment(forum.getId())) * 100;
+response = response + "question est  " + forum.getQuestion()+ "  les nombres   sont" + countcom  ;
+					
+			}
+			
+
+			return ResponseEntity.ok(new MessageResponse(response));
+
+		}
+
+		return ResponseEntity.ok(new MessageResponse("user n'est pas parent"));
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	}
 
 

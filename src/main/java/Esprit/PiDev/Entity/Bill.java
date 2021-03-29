@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -46,11 +47,20 @@ public class Bill implements Serializable{
 	
 	
 	private double total;
-	
-	private double ttc;
+	private double amount;
 	private float discount ;
 	
 	
+	@Transient
+	private String userpk;
+	@Transient
+	private String gardenpk;
+	@Transient
+	private String amount_payed;
+	@Transient
+	private String amount_not_payed;
+
+
 	/*-------------------------------association bill and user--------------------------------------------------*/
 	
 	 @ManyToOne/*(fetch=FetchType.EAGER)*/
@@ -79,41 +89,9 @@ public class Bill implements Serializable{
 	}
 
 
-	public Bill(Long id, Date dateStart, Date dateDeadline, String discription, double total, double ttc
-			, String title ) {
-		super();
-		this.id = id;
-		this.dateStart = dateStart;
-		this.dateDeadline = dateDeadline;
-		this.discription = discription;
-		this.total = total;
-		this.ttc = ttc;
-		this.title=title;
- 
-	}
 
-
- 
-	
-
-	public Bill(Long id, Date dateStart, Date dateDeadline, String discription, double total, double ttc, String title  ,
-			float discount ) {
-		super();
-		this.id = id;
-		this.dateStart = dateStart;
-		this.dateDeadline = dateDeadline;
-		this.discription = discription;
-		this.total = total;
-		this.ttc = ttc;
-		this.discount = discount;
-		this.title=title;
-		 
-	}
-	
-
-
-	public Bill(Long id, String title, Date dateStart, Date dateDeadline, String discription, double total, double ttc,
-			float discount, Dbo_User user) {
+	public Bill(Long id, String title, Date dateStart, Date dateDeadline, String discription, double total,
+			double amount, float discount, Dbo_User user, Garden garden) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -121,32 +99,72 @@ public class Bill implements Serializable{
 		this.dateDeadline = dateDeadline;
 		this.discription = discription;
 		this.total = total;
-		this.ttc = ttc;
+		this.amount = amount;
 		this.discount = discount;
-		this.user=user;
+		this.user = user;
+		this.garden = garden;
+	}
+
+
+
+	public Bill(Long id, String title, Date dateStart, Date dateDeadline, String discription, double total, double amount,
+			float discount, String userpk, String gardenpk, Dbo_User user, Garden garden) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.dateStart = dateStart;
+		this.dateDeadline = dateDeadline;
+		this.discription = discription;
+		this.total = total;
+		this.amount = amount;
+		this.discount = discount;
+		this.userpk = userpk;
+		this.gardenpk = gardenpk;
+		this.user = user;
+		this.garden = garden;
 	}
 
 
 	/*-----------------------****Getters_Setters_Methods()****-------------------------------------*/
 	
 	
-	public Bill(Long id, String title, Date dateStart, Date dateDeadline, String discription, double total, double ttc,
-			float discount, Dbo_User user, Garden garden) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.dateStart = dateStart;
-		this.dateDeadline = dateDeadline;
-		this.discription = discription;
-		this.total = total;
-		this.ttc = ttc;
-		this.discount = discount;
-		
-	}
+
+
+
 
 
 	public Long getId() {
 		return id;
+	}
+
+
+	public double getAmount() {
+		return amount;
+	}
+
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+
+	public String getAmount_payed() {
+		return amount_payed;
+	}
+
+
+	public void setAmount_payed(String amount_payed) {
+		this.amount_payed = amount_payed;
+	}
+
+
+	public String getAmount_not_payed() {
+		return amount_not_payed;
+	}
+
+
+	public void setAmount_not_payed(String amount_not_payed) {
+		this.amount_not_payed = amount_not_payed;
 	}
 
 
@@ -161,6 +179,36 @@ public class Bill implements Serializable{
 
 
 	
+
+
+	public double getamount() {
+		return amount;
+	}
+
+
+	public void setamount(double amount) {
+		this.amount = amount;
+	}
+
+
+	public String getUserpk() {
+		return userpk;
+	}
+
+
+	public void setUserpk(String userpk) {
+		this.userpk = userpk;
+	}
+
+
+	public String getGardenpk() {
+		return gardenpk;
+	}
+
+
+	public void setGardenpk(String gardenpk) {
+		this.gardenpk = gardenpk;
+	}
 
 
 	public float getDiscount() {
@@ -218,14 +266,6 @@ public class Bill implements Serializable{
 	}
 
 
-	public double getTtc() {
-		return ttc;
-	}
-
-
-	public void setTtc(double ttc) {
-		this.ttc = ttc;
-	}
 
 
 	public String getTitle() {
@@ -250,7 +290,13 @@ public class Bill implements Serializable{
 
 	/*-----------------------****TO_String()****-------------------------------------*/
 	
-	
+	@Override
+	public String toString() {
+		return "Bill [id=" + id + ", title=" + title + ", dateStart=" + dateStart + ", dateDeadline=" + dateDeadline
+				+ ", discription=" + discription + ", total=" + total + ", amount=" + amount + ", discount=" + discount
+				+ ", user=" + user + ", garden=" + garden + "]";
+	}
+
 	 
 	
 	
