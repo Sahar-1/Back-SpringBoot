@@ -1,6 +1,7 @@
 package Esprit.PiDev.Entity;
 
- 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,16 +9,16 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @SuppressWarnings("ALL")
 
 @Entity
 @Table(name = "T_User_Role")
-public class Dbo_Role   {
-
-	 
+public class Dbo_Role {
 
 	/*-----------------------****Bean_Attributes****-------------------------------------*/
 
@@ -27,21 +28,11 @@ public class Dbo_Role   {
 	private Long id;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "User_Role_Name",length = 20)
+	@Column(name = "User_Role_Name", length = 20)
 	private ERole name;
-
-
-	 
 	
-	 
 
 	/*-----------------------****Getters_Setters_Methods()****-------------------------------------*/
-
-	
-
-
-
-
 
 	public Long getId() {
 		return id;
@@ -59,22 +50,22 @@ public class Dbo_Role   {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(ERole name) {
 		this.name = name;
 	}
 
-	/* Constructor  */
+	/* Constructor */
 
 	public Dbo_Role(ERole name) {
 		super();
-		this.name=name;
+		this.name = name;
 	}
 
 	public Dbo_Role() {
 		super();
 	}
-	 
 
 }
