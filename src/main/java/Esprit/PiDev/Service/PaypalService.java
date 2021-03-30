@@ -1,7 +1,10 @@
 package Esprit.PiDev.Service;
 
+import Esprit.PiDev.Entity.Bill;
 import Esprit.PiDev.Entity.PaypalPaymentIntent;
 import Esprit.PiDev.Entity.PaypalPaymentMethod;
+import Esprit.PiDev.Repository.Bill_Repository;
+
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
@@ -17,6 +20,8 @@ import java.util.List;
 public class PaypalService {
     @Autowired
     private APIContext apiContext;
+    @Autowired
+    private Bill_Repository bill_Repository;
 
     public Payment createPayment(
             Double total,
@@ -49,7 +54,7 @@ public class PaypalService {
         redirectUrls.setCancelUrl(cancelUrl);
         redirectUrls.setReturnUrl(successUrl);
         payment.setRedirectUrls(redirectUrls);
-
+       // bill_Repository.setFacture_Amount(,);
         return payment.create(apiContext);
 
     }

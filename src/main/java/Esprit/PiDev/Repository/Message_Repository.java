@@ -18,6 +18,6 @@ public interface Message_Repository extends JpaRepository<Message, Long>{
 	@Query("select m  from Message m  where ( m.sender=:user1 and m.receiver=:user2) or ( m.sender=:user1 and m.receiver=:user2)   ORDER by m.date DESC ")
 	 public List<Message> conversations(@Param("user1") Dbo_User user1,@Param("user2") Dbo_User user2);
 
-	@Query(value="SELECT m FROM Message m WHERE r=m.sender.username LIKE CONCAT('%',:string,'%')", nativeQuery = true)
-	public List<Message> searchMessages(@Param("string") String username);
+	@Query("SELECT m FROM Message m WHERE r=m.sender.username LIKE CONCAT('%',:username,'%')")
+	public List<Message> searchMessages(@Param("username") String username);
 }

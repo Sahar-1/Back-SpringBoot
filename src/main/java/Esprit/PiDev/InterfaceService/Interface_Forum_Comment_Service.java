@@ -1,3 +1,4 @@
+
 package Esprit.PiDev.InterfaceService;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface Interface_Forum_Comment_Service {
 	 List<ForumComment> Retrieve_All_Forum() ;
 	 ForumComment Update_Forum(ForumComment F);
 	 ResponseEntity<?> Add_Forum(ForumComment F,Long idsubject,Long iduser);
+	 public ResponseEntity<?> StatistiqueCommentSubjectbyUser(Long user_id, Long iduserforum, String question) ;
+
 }

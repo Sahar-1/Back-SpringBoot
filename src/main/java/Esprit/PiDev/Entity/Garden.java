@@ -1,3 +1,4 @@
+
 package Esprit.PiDev.Entity;
 
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -31,8 +33,8 @@ public class Garden implements Serializable {
 	private String name;
 	private double price;
 
-	@ManyToOne
-	ForumSubject forumSubject;
+	@OneToMany(mappedBy = "garden")
+	List<ForumSubject> forumSubjects;
 	/*-------------------------------association Garden and bill--------------------------------------------------*/
 
 	@OneToMany(mappedBy = "garden")
@@ -100,12 +102,15 @@ public class Garden implements Serializable {
 
 	}
 
-	public ForumSubject getForumSubject() {
-		return forumSubject;
+
+
+
+	public List<ForumSubject> getForumSubjects() {
+		return forumSubjects;
 	}
 
-	public void setForumSubject(ForumSubject forumSubject) {
-		this.forumSubject = forumSubject;
+	public void setForumSubjects(List<ForumSubject> forumSubjects) {
+		this.forumSubjects = forumSubjects;
 	}
 
 	public List<Bill> getBills() {
@@ -161,6 +166,30 @@ public class Garden implements Serializable {
 		this.phone = phone;
 		this.email = email;
 		this.name = name;
+	}
+
+	public Garden(Long id, String description, String location, int phone, String email, String name, double price,
+			List<ForumSubject> forumSubjects, List<Bill> bills, Esprit.PiDev.Entity.Contract contract,
+			Set<Dbo_User> users, Set<Classe> classes, Set<Claim> claims, Set<Appointment> appointments,
+			Set<Activity> activities, Set<Trajet> trajets, Set<Bus> bus) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.location = location;
+		this.phone = phone;
+		this.email = email;
+		this.name = name;
+		this.price = price;
+		this.forumSubjects = forumSubjects;
+		this.bills = bills;
+		Contract = contract;
+		this.users = users;
+		this.classes = classes;
+		this.claims = claims;
+		this.appointments = appointments;
+		this.activities = activities;
+		this.trajets = trajets;
+		this.bus = bus;
 	}
 
 	public Long getId() {
@@ -270,30 +299,11 @@ public class Garden implements Serializable {
 	@Override
 	public String toString() {
 		return "Garden [id=" + id + ", description=" + description + ", location=" + location + ", phone=" + phone
-				+ ", email=" + email + ", name=" + name + ", price=" + price + ", forumSubject=" + forumSubject
-				+ ", bills=" + bills + ", users=" + users + ", classes=" + classes + ", appointments=" + appointments
-				+ ", activities=" + activities + ", trajets=" + trajets + ", bus=" + bus + "]";
+				+ "]";
 	}
 
-	public Garden(Long id, String description, String location, int phone, String email, String name, double price,
-			ForumSubject forumSubject, List<Bill> bills, Set<Dbo_User> users, Set<Classe> classes,
-			Set<Appointment> appointments, Set<Activity> activities, Set<Trajet> trajets, Set<Bus> bus) {
-		super();
-		this.id = id;
-		this.description = description;
-		this.location = location;
-		this.phone = phone;
-		this.email = email;
-		this.name = name;
-		this.price = price;
-		this.forumSubject = forumSubject;
-		this.bills = bills;
-		this.users = users;
-		this.classes = classes;
-		this.appointments = appointments;
-		this.activities = activities;
-		this.trajets = trajets;
-		this.bus = bus;
-	}
+	
 
+	
 }
+>>>>>>> 95281e38e448ba51aa0f0aa52ef579fc5d77597c
