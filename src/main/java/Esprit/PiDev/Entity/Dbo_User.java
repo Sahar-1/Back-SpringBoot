@@ -452,7 +452,7 @@ public class Dbo_User implements Serializable {
 			Set<Dbo_Role> role, Date createdTime, Date lastLoggedIn, Date lastLoggedOut,
 			Dbo_User_Provider dbo_User_Provider, String session_Id, boolean accountNonLocked, int failedAttempt,
 			Date lockTime, Set<Event> events, String uploadDir, List<Message> messagesender,
-			List<Message> messagereceiver, Satisfaction satisfactions, List<Bill> bills,
+			List<Message> messagereceiver, Set<Satisfaction> satisfactions, List<Bill> bills,
 			Set<ForumComment> forumComments, List<ForumSubject> forumSubjects, Long parent_id, Garden garden,
 			Set<Appointment> appointments, Classe classe, Set<Trajet> trajets) {
 		super();
