@@ -170,7 +170,7 @@ public class Satisfaction_Service_Impl implements Satisfaction_Service {
                {
         	Satisfaction sat=new Satisfaction();
         	for (Satisfaction satisfaction : usersat.getSatisfactions()) {
-    			if (satisfaction.getName()==namesat) {
+    			if (satisfaction.getName().equals(namesat)) {
 
     				sat=sat_rep.findById(satisfaction.getId()).orElse(null);
     				
@@ -216,11 +216,11 @@ if (dbo_User.getRole().stream().anyMatch(e -> e.getName().equals(ERole.ROLE_ADMI
 			for (Question_Satisfaction question : sat.getQuestions()) {
 
 				float count_good = (answer_Repository.countasnwergood(question.getId(),Review.GOOD)
-						/ 10) * 100;
+						/ answer_Repository.countasnwer(question.getId())) * 100;
 				float count_bad = (answer_Repository.countasnwerbad(question.getId(),Review.BAD)
-						/ 10) * 100;
+						/ answer_Repository.countasnwer(question.getId())) * 100;
 				float count_medium = (answer_Repository.countasnwerbad(question.getId(),Review.MEDIUM)
-						/ 10) * 100;
+						/ answer_Repository.countasnwer(question.getId())) * 100;
 
 				response = response + "question est  " + question.getQuestion_Sat()
 						+ "  les nombres Reviews GOOD  sont   " + count_good + "  % "

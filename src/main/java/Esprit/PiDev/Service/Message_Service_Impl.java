@@ -167,11 +167,15 @@ public ResponseEntity<?> OpenConversation(Long user_id, Long reciever) {
 
       @Override
       public ResponseEntity<?> searchmessages(Long user_id,String username) {
+    	  Dbo_User dbo_User = us_rep.findById(user_id).orElse(null);
+    		if (dbo_User.getRole().stream().anyMatch(e -> e.getName().equals(ERole.ROLE_PARENT))) {
 
-			return ResponseEntity.ok(new MessageResponse("Messages"+ (List<Message> )msg_rep.searchMessages(username)));
+			return ResponseEntity.ok(new MessageResponse("Messages"+ (List<Message>)msg_rep.searchMessages(username)));
 
 		}
+    		return ResponseEntity.ok(new MessageResponse("athhh"));
+
       
-      
+      }
       
 }

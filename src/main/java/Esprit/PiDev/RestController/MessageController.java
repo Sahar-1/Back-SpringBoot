@@ -79,11 +79,12 @@ public class MessageController {
 	      	return ResponseEntity.ok("done"+ messageservice.findMessageById(userDetails.getId(), msg_id)); 
    
 	   }
+	   @GetMapping("/searchmessages/{username}")
 	   public ResponseEntity<?>  searchMessages(Authentication auth,@PathVariable("username") String username)
 	   {
 			SecurityContextHolder.getContext().setAuthentication(auth);
 			Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
-	      	return ResponseEntity.ok(messageservice.searchmessages(userDetails.getId(), username)); 
+	      	return ResponseEntity.ok("done"+messageservice.searchmessages(userDetails.getId(), username)); 
   
 	   }
 }
