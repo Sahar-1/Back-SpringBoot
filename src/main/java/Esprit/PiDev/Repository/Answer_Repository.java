@@ -10,16 +10,12 @@ import Esprit.PiDev.Entity.Review;
 
 @Repository
 public interface Answer_Repository extends CrudRepository<Answer_Satisfaction, Long>{
-
-	
-	@Query(value="select  count(a) from answer_satisfaction a join a.question q  where    q.id=:id_question", nativeQuery = true)
-	int  countasnwer( @Param("id_question") int id_question);
-	
-	@Query(value="select  count(a) from answer_satisfaction a join a.question q  where    q.id=:id_question and a.content =:GOOD", nativeQuery = true )
-	int  countasnwergood( @Param("id_question") int id_question);
-	@Query(value="select  count(a) from answer_satisfaction a join a.question q  where    q.id=:id_question and a.content =:BAD", nativeQuery = true )
-	int  countasnwerbad( @Param("id_question") int id_question);
-	@Query(value="select  count(a) from answer_satisfaction a join a.question q  where    q.id=:id_question and a.content =:MEDIUM", nativeQuery = true )
-	int  countasnwermedium( @Param("id_question") int id_question);
-	
+	@Query("select  count(A) from Answer_Satisfaction A join A.question q  where  q.id=:id_question")
+	int  countasnwer(@Param("id_question") Long id_question);
+	@Query("select  count(A) from Answer_Satisfaction A join A.question q  where    q.id=:id_question and A.review LIKE CONCAT('%',:review,'%')" )
+	int  countasnwergood(@Param("id_question") Long id_question ,@Param("review") Review review);
+	@Query("select  count(A) from Answer_Satisfaction A join A.question q  where    q.id=:id_question and A.review LIKE CONCAT('%',:review,'%')" )
+	int  countasnwerbad(@Param("id_question") Long id_question,@Param("review") Review review);
+	@Query("select  count(A) from Answer_Satisfaction A join A.question q  where    q.id=:id_question and A.review LIKE CONCAT('%',:review,'%')" )
+	int  countasnwermedium(@Param("id_question") Long id_question,@Param("review") Review review);	
 }

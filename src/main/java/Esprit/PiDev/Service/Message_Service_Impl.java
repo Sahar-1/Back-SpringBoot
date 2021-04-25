@@ -18,9 +18,9 @@ import Esprit.PiDev.Repository.User_Repository;
 @Service
 public class Message_Service_Impl  implements Message_Service {
 	@Autowired
-	User_Repository us_rep;
+	private	User_Repository us_rep;
 	@Autowired
-	Message_Repository msg_rep;
+	private Message_Repository msg_rep;
 	
 	
 @Override
@@ -54,10 +54,7 @@ System.out.println("reciev null  "+reciev.getEmail());
 			}
 
 	}
-			else
-			{
-				return ResponseEntity.ok(new MessageResponse("Le user : "+reciever+"  est errone Veuillez entrer un autre USER "));
-			}
+		
 }
 
 		return ResponseEntity.ok(new MessageResponse("athhh"));
@@ -85,63 +82,101 @@ public ResponseEntity<?> deleteMessage(Message msg,Long user_id) {
 		return ResponseEntity.ok(new MessageResponse("athhh"));
 }
 @Override
-public ResponseEntity<?> deleteMessageById(Long id,Long user_id) {
+public ResponseEntity<?> deleteMessageById(Long user_id,Long id) {
 	// TODO Auto-generated method stub
-
+Message msg =msg_rep.findById(id).orElse(null);
 	 Dbo_User dbo_User = us_rep.findById(user_id).orElse(null);
 		if (dbo_User.getRole().stream().anyMatch(e -> e.getName().equals(ERole.ROLE_PARENT))) {
-			if ( id != null) {
-				
+			if(msg != null)
+			{
 				msg_rep.deleteById(id);
 		
 				return ResponseEntity.ok(new MessageResponse("Message est bien supprimer "));
+			}
+				else {
+					return ResponseEntity.ok(new MessageResponse("Message n'existe pas"));
+				}
+
+	}
+		
+		
+		
+		return ResponseEntity.ok(new MessageResponse("athhh"));
+}
+@Override
+public ResponseEntity<?> findMessageById(Long user_id,Long id) {
+	// TODO Auto-generated method stub
+	Message msg =msg_rep.findById(id).orElse(null);
+
+	 //Dbo_User dbo_User = us_rep.findById(user_id).orElse(null);
+	//	if (dbo_User.getRole().stream().anyMatch(e -> e.getName().equals(ERole.ROLE_PARENT))) {
+			if ( msg != null) {
+				
+			
+		
+				return ResponseEntity.ok(new MessageResponse("Message  "+ msg_rep.findById(id).orElse(null)));
 			} 
 			else {
 				return ResponseEntity.ok(new MessageResponse("Message n'existe pas"));
 			}
 
-	}
-		return ResponseEntity.ok(new MessageResponse("athhh"));
+	//}
+	//	return ResponseEntity.ok(new MessageResponse("athhh"));
 }
 @Override
-public ResponseEntity<?> findMessageById(Long id,Long user_id) {
+/*public ResponseEntity<?> */  
+public List<Message> retrieveAllMessages(Long user_id) {
 	// TODO Auto-generated method stub
 
 	 Dbo_User dbo_User = us_rep.findById(user_id).orElse(null);
-		if (dbo_User.getRole().stream().anyMatch(e -> e.getName().equals(ERole.ROLE_PARENT))) {
-			if ( id != null) {
-				
-			
-		
-				return ResponseEntity.ok(new MessageResponse("Message  "+ msg_rep.findById(id).get()));
-			} 
-			else {
-				return ResponseEntity.ok(new MessageResponse("Message n'existe pas"));
-			}
-
-	}
-		return ResponseEntity.ok(new MessageResponse("athhh"));
-}
-@Override
-public ResponseEntity<?> retrieveAllMessages(Long user_id) {
-	// TODO Auto-generated method stub
-
-	 Dbo_User dbo_User = us_rep.findById(user_id).orElse(null);
-		if (dbo_User.getRole().stream().anyMatch(e -> e.getName().equals(ERole.ROLE_PARENT))) {
+	//if (dbo_User.getRole().stream().anyMatch(e -> e.getName().equals(ERole.ROLE_PARENT))) {
 			
 				
-			
-		
-				return ResponseEntity.ok(new MessageResponse("Message  "+(List<Message>)msg_rep.findAll()));
+			return (List<Message>)msg_rep.findAll();
+	//}
+			/*/	return ResponseEntity.ok(new MessageResponse("Message  "+(List<Message>)msg_rep.findAll()));*/
 		
 
-	}
-		return ResponseEntity.ok(new MessageResponse("athhh"));
+	//}
+		//return ResponseEntity.ok(new MessageResponse("athhh"));
+	//return null;
 }
 
 @Override
 public ResponseEntity<?> OpenConversation(Long user_id, Long reciever) {
 	// TODO Auto-generated method stub
-	return ResponseEntity.ok(new MessageResponse("conversations  "+(List<Message>)msg_rep.Conversations(user_id, reciever)));
+	 Dbo_User sender = us_rep.findById(user_id).orElse(null);
+	 Dbo_User reciv = us_rep.findById(reciever).orElse(null);
+		return ResponseEntity.ok(new MessageResponse("conversations  "+msg_rep.conversations(sender,reciv)));
+
+/*List<Message> msgsesder=new ArrayList<>();
+(List<Message> )msgreciever=new ArrayList<>();
+
+	for (Message message : sender.getMessagesender()) {
+		msgsesder.add(message);
+	}
+	for (Message message : reciv.getMessagereceiver()) {
+		msgreciever.add(message);
+	}
+	List<Message> conversations=new ArrayList<>();
+	conversations.addAll(msgreciever);
+	conversations.addAll(msgsesder);*/
+	 
+	 
 }
+
+
+      @Override
+      public ResponseEntity<?> searchmessages(Long user_id,String username) {
+    	  Dbo_User dbo_User = us_rep.findById(user_id).orElse(null);
+    		if (dbo_User.getRole().stream().anyMatch(e -> e.getName().equals(ERole.ROLE_PARENT))) {
+
+			return ResponseEntity.ok(new MessageResponse("Messages"+ (List<Message>)msg_rep.searchMessages(username)));
+
+		}
+    		return ResponseEntity.ok(new MessageResponse("athhh"));
+
+      
+      }
+      
 }

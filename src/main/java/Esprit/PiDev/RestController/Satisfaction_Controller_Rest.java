@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import Esprit.PiDev.Entity.Answer_Satisfaction;
 import Esprit.PiDev.Entity.Review;
 import Esprit.PiDev.Entity.Satisfaction;
 import Esprit.PiDev.Repository.Question_Satisfaction_Repository;
@@ -27,9 +28,9 @@ import Esprit.PiDev.Service.Session_UserDetails;
 public class Satisfaction_Controller_Rest {
 
 	@Autowired
-	Satisfaction_Service satisfactionservice;
+	private	Satisfaction_Service satisfactionservice;
 	@Autowired
-	Question_Satisfaction_Repository rep_quest;
+	private Question_Satisfaction_Repository rep_quest;
 
 	
 	
@@ -42,9 +43,9 @@ public class Satisfaction_Controller_Rest {
 		return list;
 	}
 
-	@GetMapping("/retrieve-satisfaction/{satisfaction-id}")
-	public void retrieveSatisfaction(@PathVariable("satisfaction-id") Long id) {
-		satisfactionservice.findSatisfactionById(id);
+	@GetMapping("/findSatisfactionById/{satisfaction-id}")
+	 Satisfaction findSatisfactionById(@PathVariable("satisfaction-id") Long id) {
+	return	satisfactionservice.findSatisfactionById(id);
 	}
 
 	@PostMapping("/add-satisfaction/{id-user}")
@@ -67,12 +68,12 @@ public class Satisfaction_Controller_Rest {
 		satisfactionservice.saveOrUpdate(satisfaction, iduser, idsat);
 	}
 
-	@PutMapping("/Affecter_Answer_Question_Satisfaction/{name}")
-	public ResponseEntity<?> Affecter_Answer_Question_Satisfaction(Authentication auth, @PathVariable Long idsat,
-			@RequestBody List<Review> answers) {
+	@PutMapping("/Affecter_Answer_Question_Satisfaction/{idsat}")
+	List<Answer_Satisfaction> Affecter_Answer_Question_Satisfaction(Authentication auth, @PathVariable Long idsat,
+			@RequestBody List<Review> reviews) {
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
-		return satisfactionservice.Affecter_Answer_Question_Satisfaction(userDetails.getId(), idsat, answers);
+		return satisfactionservice.Affecter_Answer_Question_Satisfaction(userDetails.getId(), idsat, reviews);
 	}
 
 	@GetMapping("/getAllQuestionsbySatisfaction/{idsat}")
@@ -90,6 +91,10 @@ public class Satisfaction_Controller_Rest {
 		Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
 		return satisfactionservice.StatistiqueAnswer_QuetionSatisfactionbUSer(userDetails.getId(), idusersat, namesat);
 		}
+	@PostMapping("/AffecterQuetions_Satisfaction_Satisfaction_User/{iduser}")
+	public ResponseEntity<?> AffecterQuetions_Satisfaction_Satisfaction_User(@RequestBody Satisfaction satisfaction, @PathVariable("iduser") Long iduser) {
+		return satisfactionservice.AffecterQuetions_Satisfaction_Satisfaction_User(satisfaction,iduser);
+	}
 
 
 }

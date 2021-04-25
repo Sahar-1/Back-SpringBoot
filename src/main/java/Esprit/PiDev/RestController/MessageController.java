@@ -1,5 +1,7 @@
 package Esprit.PiDev.RestController;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -29,9 +31,9 @@ public class MessageController {
 	//@Autowired
 	//private SimpMessagingTemplate template;
 	@Autowired
-	Message_Service messageservice;
+	private Message_Service messageservice;
 	@Autowired
-	User_Repository userrepository;
+	private User_Repository userrepository;
 	
 	
 	//@RequestMapping(value = "/sendMessage/{idReciever}", method = RequestMethod.POST)
@@ -56,17 +58,33 @@ public class MessageController {
 		   } 
 	
 	   @GetMapping("/retrieve-all-Messages")
-	   public ResponseEntity<?> retrieveallMessages(Authentication auth) {
+	   List<Message> retrieveallMessages(Authentication auth) {
 			SecurityContextHolder.getContext().setAuthentication(auth);
 			Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
-	          
-	      	return ResponseEntity.ok("done"+ messageservice.retrieveAllMessages(userDetails.getId())); 
+	          return messageservice.retrieveAllMessages(userDetails.getId());
+	      //	return ResponseEntity.ok("done"+ messageservice.retrieveAllMessages(userDetails.getId())); 
 	   } 
 	   @GetMapping("/retrieve-conversation/{reciever_id}")
 	   public ResponseEntity<?> conversation(Authentication auth,@PathVariable("reciever_id") Long reciever_id) {
 			SecurityContextHolder.getContext().setAuthentication(auth);
 			Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
 	          
-	      	return ResponseEntity.ok("done"+ messageservice.OpenConversation(userDetails.getId(), reciever_id)); 
+	      	return ResponseEntity.ok("done"+ messageservice.OpenConversation(userDetails.getId(),reciever_id)); 
 	   } 
+	   @GetMapping("/findMessageById/{msg_id}")
+	   public ResponseEntity<?> findMessageById(Authentication auth,@PathVariable("msg_id") Long msg_id) 
+	   {
+			SecurityContextHolder.getContext().setAuthentication(auth);
+			Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
+	      	return ResponseEntity.ok("done"+ messageservice.findMessageById(userDetails.getId(), msg_id)); 
+   
+	   }
+	   @GetMapping("/searchmessages/{username}")
+	   public ResponseEntity<?>  searchMessages(Authentication auth,@PathVariable("username") String username)
+	   {
+			SecurityContextHolder.getContext().setAuthentication(auth);
+			Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
+	      	return ResponseEntity.ok("done"+messageservice.searchmessages(userDetails.getId(), username)); 
+  
+	   }
 }

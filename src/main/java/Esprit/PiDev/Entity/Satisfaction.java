@@ -28,9 +28,9 @@ public class Satisfaction {
     private String name;
 	@Temporal(TemporalType.DATE)	  
     private Date Satisfaction_Date;
-	@ManyToMany
+	@ManyToMany(mappedBy="satisfactions")
 	private List<Dbo_User> users;
-    @OneToMany(mappedBy="satisfactions",fetch=FetchType.EAGER)
+    @ManyToMany(mappedBy="satisfactions")
 	private List<Question_Satisfaction> questions;
 
 	/*-----------------------****Getters_Setters_Methods()****-------------------------------------*/

@@ -1,3 +1,4 @@
+
 package Esprit.PiDev.Entity;
 
 import java.io.Serializable;
@@ -59,8 +60,8 @@ public class Bill implements Serializable{
 	private String amount_payed;
 	@Transient
 	private String amount_not_payed;
-
-
+	
+	
 	/*-------------------------------association bill and user--------------------------------------------------*/
 	
 	 @ManyToOne/*(fetch=FetchType.EAGER)*/
@@ -89,7 +90,7 @@ public class Bill implements Serializable{
 	}
 
 
-
+	
 	public Bill(Long id, String title, Date dateStart, Date dateDeadline, String discription, double total,
 			double amount, float discount, Dbo_User user, Garden garden) {
 		super();
@@ -128,7 +129,7 @@ public class Bill implements Serializable{
 	/*-----------------------****Getters_Setters_Methods()****-------------------------------------*/
 	
 	
-
+	
 
 
 
@@ -266,7 +267,7 @@ public class Bill implements Serializable{
 	}
 
 
-
+	
 
 	public String getTitle() {
 		return title;
@@ -314,3 +315,4 @@ public class Bill implements Serializable{
 	
 	
 }
+

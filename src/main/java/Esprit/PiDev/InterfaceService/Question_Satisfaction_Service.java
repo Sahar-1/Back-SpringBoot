@@ -21,7 +21,7 @@ public interface Question_Satisfaction_Service {
 	
 	
 	public ResponseEntity<?> getAllQuestions(Long user_id) ;
-	public ResponseEntity<?> addQuestion(Long user_id, Question_Satisfaction question,Long idsat) ;
+	public ResponseEntity<?> addQuestion(Long user_id, Question_Satisfaction question) ;
 	public ResponseEntity<?> deleteQuestionById(long user_id, Long question_id);
 	public ResponseEntity<?> UpdateQuestion(long user_id, Long question_id, Question_Satisfaction  question);
 

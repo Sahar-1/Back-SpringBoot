@@ -7,8 +7,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Answer_Satisfaction {
@@ -18,10 +20,12 @@ public class Answer_Satisfaction {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "reviews", length = 20)
 	private Review review;
-	@ManyToOne
-	private Question_Satisfaction question;
 	
 	@ManyToOne
+	@JsonIgnore
+	private Question_Satisfaction question;
+	@ManyToOne
+	@JsonIgnore
 	private Dbo_User user;
 	public Long getId() {
 		return id;
@@ -57,10 +61,6 @@ public class Answer_Satisfaction {
 	public Answer_Satisfaction() {
 		super();
 	}
-	@Override
-	public String toString() {
-		return "Answer_Satisfaction [id=" + id + ", review=" + review + ", question=" + question + ", user=" + user
-				+ "]";
-	}
+
 
 }

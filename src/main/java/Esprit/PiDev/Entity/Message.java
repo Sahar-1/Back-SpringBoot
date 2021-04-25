@@ -27,7 +27,7 @@ public class Message {
     	@Temporal(TemporalType.DATE)
 	    private Date date;
 
-    	@Column(name="Message", columnDefinition="TEXT")
+    	@Column(name="content", columnDefinition="TEXT")
     	private String content;
     	@JsonIgnore
     	@ManyToOne
@@ -113,15 +113,18 @@ public class Message {
 		}
 
 
-		@Override
-		public String toString() {
-			return "Message [id=" + id + ", date=" + date + ", message=" + content + ", sender=" + sender
-					+ ", receiver=" + receiver + "]";
-		}
+
 
 
 		public Message() {
 			super();
+		}
+
+
+		@Override
+		public String toString() {
+			return "Message [id=" + id + ", date=" + date + ", content=" + content + ", sender=" + sender
+					+ ", receiver=" + receiver + "]";
 		}
 
 
