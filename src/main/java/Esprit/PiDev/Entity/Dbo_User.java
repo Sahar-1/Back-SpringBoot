@@ -75,16 +75,15 @@ public class Dbo_User implements Serializable {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-
 	private Set<Dbo_Role> role = new HashSet<>();
 
 	@Column(name = "created_time", updatable = false)
 	private Date createdTime;
 
-	@Column(name = "Last_Logged_In", updatable = true)
+	@Column(name = "Last_Logged_In", updatable = false)
 	private Date lastLoggedIn;
 
-	@Column(name = "Last_Logged_out", updatable = true)
+	@Column(name = "Last_Logged_out", updatable = false)
 	private Date lastLoggedOut;
 
 	@Enumerated(EnumType.STRING)

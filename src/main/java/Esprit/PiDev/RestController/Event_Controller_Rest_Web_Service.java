@@ -86,7 +86,12 @@ public class Event_Controller_Rest_Web_Service {
                 || (authentication.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_USER")))) {
             throw new API_Request_Exception_UNAUTHORIZED_STATUS_403(authentication.getName().toUpperCase() + " IS UNAUTHORIZED CONTENT WITH THIS AUTHORITY !!! ");
         } else {
+
             eventService.affect_parent_child(id_event, user_id, authentication);
+            int test = eventService.getEventById(id_event).get().getCapacity();
+            if(test == 0){
+                return ResponseEntity.ok(new MessageResponse("No place this event with full capacity"));
+            }
             return ResponseEntity.ok(new MessageResponse("Saved"));
         }
 

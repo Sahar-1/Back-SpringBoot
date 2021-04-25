@@ -6,7 +6,7 @@ public class RequestLogin {
 	 
 	private String email;
 
-	@NotBlank
+
 	private String password;
 
  

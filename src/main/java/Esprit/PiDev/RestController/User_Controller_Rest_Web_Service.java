@@ -84,56 +84,37 @@ public class User_Controller_Rest_Web_Service {
 
     /* Authentication API */
     @RequestMapping("/Sign-In")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody RequestLogin loginRequest, HttpServletRequest request,
-                                              Authentication authentication, BindingResult bindingResult) throws UnsupportedEncodingException {
-        Map<String, Object> Errors = new HashMap<>();
-        /* Check if input is null */
-        if (loginRequest.getEmail().toString().equalsIgnoreCase("")) {
-            Errors.put("Errors : the Email is Required ,'" + bindingResult.getFieldError() + "' can not be null  !",
-                    true);
+    public ResponseEntity<?> authenticateUser(  @RequestBody RequestLogin loginRequest, HttpServletRequest request,
+                                              Authentication authentication ) throws UnsupportedEncodingException {
 
-            return ResponseEntity.badRequest().body(new MessageResponse("" + Errors));
+
+        if (loginRequest.getEmail()==null || loginRequest.getPassword()==null) {
+            return ResponseEntity.badRequest().body(new MessageResponse("All this fiels are required" ));
         }
-        /* Check if email is valid and exists */
+
         Optional<Dbo_User> userAuth = Jpa_User_Repository.findByEmailIgnoreCase(loginRequest.getEmail());
         if (userAuth.isPresent() == false) {
             return ResponseEntity.badRequest().body(new MessageResponse(
                     "Error: Couldn’t find account with this email  during Sign-In OR this mail may be NOT VALID!"));
         }
-        //Check if account is locked
+
         if (Jpa_User_Repository.getaccountNonLocked(loginRequest.getEmail()) == false) {
             return ResponseEntity.badRequest().body(new MessageResponse("Your account is locked right now"));
         }
-        /* Check if account is activated */
+
         Dbo_User user = Jpa_User_Repository.findByEmail(loginRequest.getEmail());
         if (Jpa_User_Repository.isActif(loginRequest.getEmail()) == false) {
             return ResponseEntity.badRequest().body(new MessageResponse(
                     "Error: Sorry Mr'" + user.getFullName() + " your account is not already activated  !"));
         }
 
-        /*
-         * check the attempts authentication then locked his account if attempts
-         * =3
-         */
-        /*
-         * when attempts <3 and it was a success login all attempts reset
-         * to 0
-         */
-        /* and Check if account is activated */
+
         try {
             authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
             if (user.getFailedAttempt() > 0) {
-                I_User_Service.resetFailedAttempts(user.getEmail()); // when
-                // User
-                // logged
-                // In
-                // reset
-                // all
-                // failed
-                // attempts
-                // to
-                // null
+                I_User_Service.resetFailedAttempts(user.getEmail());
+
             }
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtUtils.generateJwtToken(authentication);
@@ -156,50 +137,24 @@ public class User_Controller_Rest_Web_Service {
                     userDetails.getEmail(), roles));
         } catch (BadCredentialsException e) { // BAD CREDENTIALS
             if (Jpa_User_Repository.getaccountNonLocked(loginRequest.getEmail()) == true // if
-                    // account
-                    // not
-                    // locked
-                    // and
-                    // verified
+
                     && Jpa_User_Repository.isActif(loginRequest.getEmail()) == true) {
                 if (Jpa_User_Repository.getfailedAttempt(loginRequest.getEmail()) < User_Service.MAX_FAILED_ATTEMPTS // if
-                        // number
-                        // of
-                        // failed
-                        // attempts
-                        // less
-                        // then
-                        // 3
+
                         - 1) {
                     I_User_Service.increaseFailedAttempts(user); // if
-                    // authentication
-                    // failed
-                    // ==>
-                    // failed_attempts
-                    // +=1
+
                 } else {
-                    I_User_Service.lock(user); // if number of failed attempts =
-                    // 3 then lock the account
+                    I_User_Service.lock(user);
                     return ResponseEntity.badRequest()
                             .body(new MessageResponse("Your account has been locked due to 3 failed attempts."
                                     + " It will be unlocked after 24 hours."));
                 }
             } else if (Jpa_User_Repository.getaccountNonLocked(loginRequest.getEmail()) == false
                     && Jpa_User_Repository.isActif(loginRequest.getEmail()) == true) { // if
-                // account
-                // is
-                // locked
-                // and
-                // verified
+
                 if (I_User_Service.unlockWhenTimeExpired(user)) { // if block
-                    // duration
-                    // is not
-                    // less than
-                    // 24 hours
-                    // then
-                    // unlock
-                    // this
-                    // account
+
                     return ResponseEntity.badRequest()
                             .body(new MessageResponse("Your account has been unlocked. Please try to login again."));
                 }
@@ -228,7 +183,7 @@ public class User_Controller_Rest_Web_Service {
         mailMessage.setSubject("Complete Password Reset!");
         mailMessage.setFrom("ayoub.benzahra@esprit.tn");
         mailMessage.setText("To complete the password reset process, please click here: "
-                + "http://localhost:8900/confirm-reset?token=" + confirmationToken.getConfirmationToken());
+                + "https://localhost:44372/Sign_In/ResetPassword?token=" + confirmationToken.getConfirmationToken());
 
         // Send the email
         emailSenderService.sendEmail(mailMessage);
@@ -239,8 +194,8 @@ public class User_Controller_Rest_Web_Service {
     }
 
     // Endpoint to confirm the token
-    @RequestMapping(value = "/confirm-reset", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseEntity<?> validateResetToken(@RequestParam("token") String confirmationToken) {
+    @RequestMapping(value = "/confirm-reset", method = RequestMethod.GET )
+    public ResponseEntity<MessageResponse> validateResetToken(@RequestParam("token") String confirmationToken) {
         Confirmation_Token_User token = confirmationTokenRepository.findByconfirmationToken(confirmationToken);
 
         if (token != null) {
@@ -251,13 +206,14 @@ public class User_Controller_Rest_Web_Service {
             return ResponseEntity.ok(new MessageResponse(
                     "link of token_Password_Reset has been verifed Now you can change your password"));
         } else {
-            return ResponseEntity.badRequest().body("The link is invalid or broken!. ");
+            return ResponseEntity.badRequest().body(new MessageResponse(
+                    "The token is either broken or invalid."));
         }
 
     }
 
     // Endpoint to update a user's password
-    @RequestMapping(value = "/reset-password", method = RequestMethod.POST)
+    @RequestMapping(value = "/reset-password", method = RequestMethod.POST , consumes={"application/json"})
     public ResponseEntity<?> resetUserPassword(@RequestBody Dbo_User user) {
 
         // Use email to find user
@@ -334,10 +290,7 @@ public class User_Controller_Rest_Web_Service {
                         roles.add(ROLE_ENFANT);
 
                         break;
-                    default:
-                        Dbo_Role user = Jpa_Role_Repository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(user);
+
                 }
             });
         }
@@ -359,7 +312,7 @@ public class User_Controller_Rest_Web_Service {
         mailMessage.setSubject("Complete Registration!");
         mailMessage.setFrom("benzahra.ayoub15@gmail.com");
         mailMessage.setText("To confirm your account, please click here : "
-                + "http://localhost:8900/confirm-account?token=" + confirmationToken.getConfirmationToken());
+                + "https://localhost:8900/confirm-account?token=" + confirmationToken.getConfirmationToken());
 
         emailSenderService.sendEmail(mailMessage);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

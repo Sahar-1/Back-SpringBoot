@@ -7,7 +7,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 
-@EnableScheduling
+//@EnableScheduling
 @SpringBootApplication
 @EnableAspectJAutoProxy
 public class EspritPiDevApplication {

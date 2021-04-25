@@ -19,6 +19,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 
@@ -58,10 +59,12 @@ public class Event implements Serializable {
     @Column(name = "Event_end_date")
     private Date end_date;
 
+    @JsonIgnore 
     @OneToOne(targetEntity = Dbo_User.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user_id_Creator")
     private Dbo_User user_Event_Creator;
 
+    @JsonIgnore 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Dbo_User> child_participant;
 

@@ -1,7 +1,7 @@
 package Esprit.PiDev.Entity.RequestApiForm;
 
  
-public class MessageResponse {
+public class MessageResponse  {
 	private String Message;
     
 	public MessageResponse(String exception) {

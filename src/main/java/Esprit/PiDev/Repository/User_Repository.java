@@ -21,6 +21,10 @@ public interface User_Repository extends JpaRepository<Dbo_User, Long> {
 	
 	@Query("select u.id FROM Dbo_User as u WHERE u.email = :Email")
 	Long findIDByEmail(@Param("Email") String Email);
+/*
+	@Query(value = "select u.user_id , u.user_first_name , u.actif, u.account_non_locked , u.user_birthday_date , u.user_email , u.auth_user_provider , u.last_logged_in , u.last_logged_out , u.user_last_name, u.user_password , u.failed_attempt ,u.created_time FROM t_user as u ", nativeQuery = true )
+	List<Dbo_User> findalluser();
+*/
 
 	Optional<Dbo_User> findByEmailIgnoreCase(String email);
 
