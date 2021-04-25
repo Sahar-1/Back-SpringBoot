@@ -37,7 +37,7 @@ public class Payment_Rest_Controller {
     public String index(){
         return "index";
     }
-    
+    /*
 
     @RequestMapping(  value = "/pay")
     public String pay(HttpServletRequest request , Authentication authentication){
@@ -83,5 +83,5 @@ public class Payment_Rest_Controller {
             logger.error(e.getMessage());
         }
         return "redirect:/";
-    }
+    }*/
 }

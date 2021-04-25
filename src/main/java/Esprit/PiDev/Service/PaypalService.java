@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 public class PaypalService {
-    @Autowired
+   /* @Autowired
     private APIContext apiContext;
     @Autowired
     private Bill_Repository bill_Repository;
@@ -65,5 +65,5 @@ public class PaypalService {
         PaymentExecution paymentExecute = new PaymentExecution();
         paymentExecute.setPayerId(payerId);
         return payment.execute(apiContext, paymentExecute);
-    }
+    }*/
 }

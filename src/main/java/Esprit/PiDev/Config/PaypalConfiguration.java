@@ -18,7 +18,7 @@ public class PaypalConfiguration {
     private String clientSecret;
     @Value("${paypal.mode}")
     private String mode;
-
+/*
     @Bean
     public Map<String, String> paypalSdkConfig(){
         Map<String, String> sdkConfig = new HashMap<>();
@@ -35,5 +35,5 @@ public class PaypalConfiguration {
         APIContext apiContext = new APIContext(authTokenCredential().getAccessToken());
         apiContext.setConfigurationMap(paypalSdkConfig());
         return apiContext;
-    }
+    }*/
 }

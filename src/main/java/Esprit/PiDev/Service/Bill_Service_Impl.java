@@ -71,7 +71,7 @@ Garden garden =gard_rep.findById(idgarden).orElseThrow(()-> new RuntimeException
 				bill_To_Update.setTotal(C.getTotal());
 				bill_To_Update.setDiscount(C.getDiscount());
 				bill_To_Update.setUser(C.getUser());
-				bill_To_Update.setamount(C.getamount());
+				bill_To_Update.setAmount(C.getAmount());
 				bill_To_Update.setGarden(C.getGarden());
 				
 			

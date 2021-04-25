@@ -81,8 +81,8 @@ public class Bill_Report_Service {
     	this.bill = this_User.getFullName();
     	this.name_user=this_User.getFullName();
         for (Bill b : bill){
-        	Long amout_rest_to_pay = (long) (TOTAL_AMOUNT - b.getamount()); 
-        	Long amount_already_payed = (long) b.getamount();
+        	Long amout_rest_to_pay = (long) (TOTAL_AMOUNT - b.getAmount());
+        	Long amount_already_payed = (long) b.getAmount();
         	b.setAmount_payed(String.valueOf(amount_already_payed));
         	b.setAmount_not_payed(String.valueOf(amout_rest_to_pay));
         	

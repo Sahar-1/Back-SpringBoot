@@ -182,14 +182,7 @@ public class Bill implements Serializable{
 	
 
 
-	public double getamount() {
-		return amount;
-	}
 
-
-	public void setamount(double amount) {
-		this.amount = amount;
-	}
 
 
 	public String getUserpk() {
