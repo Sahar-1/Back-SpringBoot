@@ -13,7 +13,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
@@ -35,16 +38,19 @@ public class ForumComment implements Serializable{
 	private String answer;
 	
 	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern ="yyyy-MM-dd" ,shape =Shape.STRING)
 	private Date postedDate;
 	
 	
 	/*-------------------------------association forumComment and ForumSubject--------------------------------------------------*/
 	@ManyToOne
+	@JsonIgnore
 	ForumSubject forumSubject;
 	
 	/*-------------------------------association forumComment and user--------------------------------------------------*/
 
 	@ManyToOne
+	@JsonIgnore
 	Dbo_User user;
 	
 	/*-----------------------****Constructors_Object****-------------------------------------*/

@@ -1,16 +1,16 @@
 package Esprit.PiDev.Service;
 
-import Esprit.PiDev.Entity.Event;
-import Esprit.PiDev.Repository.Event_Repository;
+import java.util.Date;
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Date;
-import java.util.logging.Logger;
+import Esprit.PiDev.Entity.Event;
+import Esprit.PiDev.Repository.Event_Repository;
 
 @SuppressWarnings("ALL")
 @Component
@@ -27,7 +27,7 @@ public class FuncReportScheduled implements InitializingBean {
         loggerCRON.info("---------------- END  CRON  TASK  ----------------");
     }
 
-    @Scheduled(cron = "* */10 * * * ?")
+    //@Scheduled(cron = "* */10 * * * ?")
     @Transactional
     @RequestMapping("/deleteCron")
     public void delete_Event_Trigger_Every_two_hours() {

@@ -1,24 +1,29 @@
 package Esprit.PiDev.Service;
 
-import Esprit.PiDev.Entity.Bill;
-import Esprit.PiDev.Entity.PaypalPaymentIntent;
-import Esprit.PiDev.Entity.PaypalPaymentMethod;
-import Esprit.PiDev.Repository.Bill_Repository;
-
-import com.paypal.api.payments.*;
-import com.paypal.base.rest.APIContext;
-import com.paypal.base.rest.PayPalRESTException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.paypal.api.payments.Amount;
+import com.paypal.api.payments.Payer;
+import com.paypal.api.payments.Payment;
+import com.paypal.api.payments.PaymentExecution;
+import com.paypal.api.payments.RedirectUrls;
+import com.paypal.api.payments.Transaction;
+import com.paypal.base.rest.APIContext;
+import com.paypal.base.rest.PayPalRESTException;
+
+import Esprit.PiDev.Entity.PaypalPaymentIntent;
+import Esprit.PiDev.Entity.PaypalPaymentMethod;
+import Esprit.PiDev.Repository.Bill_Repository;
+
 @Service
 public class PaypalService {
-    @Autowired
+    @Autowired(required=false)
     private APIContext apiContext;
     @Autowired
     private Bill_Repository bill_Repository;

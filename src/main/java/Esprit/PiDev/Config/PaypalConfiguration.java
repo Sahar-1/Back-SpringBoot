@@ -1,14 +1,15 @@
 package Esprit.PiDev.Config;
 
-import com.paypal.base.rest.APIContext;
-import com.paypal.base.rest.OAuthTokenCredential;
-import com.paypal.base.rest.PayPalRESTException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.paypal.base.rest.APIContext;
+import com.paypal.base.rest.OAuthTokenCredential;
+import com.paypal.base.rest.PayPalRESTException;
 
 @Configuration
 public class PaypalConfiguration {
@@ -32,8 +33,12 @@ public class PaypalConfiguration {
 
     @Bean
     public APIContext apiContext() throws PayPalRESTException {
+    	try{
         APIContext apiContext = new APIContext(authTokenCredential().getAccessToken());
         apiContext.setConfigurationMap(paypalSdkConfig());
         return apiContext;
+    	}catch(Exception e){
+    		return null;
+    	}
     }
 }

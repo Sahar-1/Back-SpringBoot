@@ -1,16 +1,6 @@
 package Esprit.PiDev;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import com.nimbusds.jose.shaded.json.parser.ParseException;
-
-import Esprit.PiDev.InterfaceService.Interface_User_Service;
-import Esprit.PiDev.Repository.Role_Repository;
-import Esprit.PiDev.Repository.User_Repository;
-import Esprit.PiDev.Service.User_Role_Service;
-import Esprit.PiDev.Service.User_Service;
 
 @SpringBootTest
 class EspritPiDevApplicationTests {

@@ -3,21 +3,20 @@ package Esprit.PiDev.Entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -43,19 +42,23 @@ public class ForumSubject implements Serializable{
 	@Column(columnDefinition="varchar(1000)",name="Question_Forum")
 	private String question;
 	
-	@Temporal(TemporalType.DATE)
+	
+	@JsonFormat(pattern ="yyyy-MM-dd" ,shape =Shape.STRING)
 	private Date postedDate;
 	private float status;
+	private Integer voteCount = 0;
 	
 	/*-------------------------------association ForumSubject and forumComment  --------------------------------------------------*/
-
+	@JsonIgnore
 	@OneToMany(mappedBy="forumSubject")
 	List<ForumComment> forumComments;
 
 	@ManyToOne
+	@JsonIgnore
 	private Dbo_User user;
 
 	@ManyToOne
+	@JsonIgnore
 	private Garden garden;
 
 
@@ -180,6 +183,16 @@ public class ForumSubject implements Serializable{
 
 	public void setStatus(float status) {
 		this.status = status;
+	}
+
+
+	public Integer getVoteCount() {
+		return voteCount;
+	}
+
+
+	public void setVoteCount(Integer voteCount) {
+		this.voteCount = voteCount;
 	}
 
 

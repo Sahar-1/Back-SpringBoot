@@ -15,7 +15,8 @@ public interface Interface_Forum_Comment_Service {
 	 void deleteForum(Long id);
 	 List<ForumComment> Retrieve_All_Forum() ;
 	 ForumComment Update_Forum(ForumComment F);
-	 ResponseEntity<?> Add_Forum(ForumComment F,Long idsubject,Long iduser);
+	 ResponseEntity<?> Add_Forum_Comment_To_Subject(ForumComment F,Long idsubject,Long iduser);
 	 public ResponseEntity<?> StatistiqueCommentSubjectbyUser(Long user_id, Long iduserforum, String question) ;
+	// public ForumComment findCommentBySubject(ForumSubject subject) ;
 
 }

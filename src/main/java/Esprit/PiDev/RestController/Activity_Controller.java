@@ -1,7 +1,5 @@
 package Esprit.PiDev.RestController;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import Esprit.PiDev.Entity.Activity;
-import Esprit.PiDev.Entity.Garden;
 import Esprit.PiDev.Service.Activity_Service;
 import Esprit.PiDev.Service.Session_UserDetails;
 

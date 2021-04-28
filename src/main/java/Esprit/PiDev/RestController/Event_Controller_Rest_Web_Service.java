@@ -1,5 +1,24 @@
 package Esprit.PiDev.RestController;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import Esprit.PiDev.Entity.Dbo_User;
 import Esprit.PiDev.Entity.Enum_Event_Type;
 import Esprit.PiDev.Entity.Event;
@@ -10,15 +29,6 @@ import Esprit.PiDev.InterfaceService.Interface_Event_Service;
 import Esprit.PiDev.Repository.Event_Repository;
 import Esprit.PiDev.Repository.User_Repository;
 import Esprit.PiDev.Service.Session_UserDetails;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings({"UnnecessaryLocalVariable", "SpringJavaAutowiredFieldsWarningInspection"})
 @RestController

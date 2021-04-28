@@ -11,7 +11,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import Esprit.PiDev.Entity.Bill;
-import Esprit.PiDev.Entity.Garden;
 @Repository
 public interface Bill_Repository extends CrudRepository<Bill, Long>{
 	
@@ -27,11 +26,5 @@ public interface Bill_Repository extends CrudRepository<Bill, Long>{
 	@Query("UPDATE Bill set amount=:amount where user_user_id=:user_id")
 	public void setFacture_Amount(@Param("user_id") long user_id ,@Param("amount") double amount);
 	
-	//@Query("SELECT  g  from Bill b join b.garden g where g.id=:garden")
-	//Garden bill_bygarden(@Param("garden") long garden);
-/*	@Query("SELECT count (*)  from Dbo_User c where c.parent_id.id=:user AND c.garden.id=:kindergarten")
-	public long getNumberOfChildForUserInKinderJPQL(@Param("user") int user,@Param("kindergarten") int kindergarten);
-/*
- * 
- */
+	
 }

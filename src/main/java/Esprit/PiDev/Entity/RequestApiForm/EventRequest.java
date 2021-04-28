@@ -1,9 +1,9 @@
 package Esprit.PiDev.Entity.RequestApiForm;
 
-import Esprit.PiDev.Entity.Dbo_User;
-
 import java.util.Date;
 import java.util.Set;
+
+import Esprit.PiDev.Entity.Dbo_User;
 
 public class EventRequest {
     private String name;

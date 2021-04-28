@@ -1,8 +1,7 @@
 package Esprit.PiDev.Security;
 
-import Esprit.PiDev.ExterneService.Custom_Oauth2_User_Service;
-import Esprit.PiDev.ExterneService.OAuth2_Login_Success_Handler;
-import Esprit.PiDev.Service.User_Details_Service_Impl;
+import javax.servlet.http.HttpSessionListener;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -11,10 +10,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +20,9 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import javax.servlet.http.HttpSessionListener;
+import Esprit.PiDev.ExterneService.Custom_Oauth2_User_Service;
+import Esprit.PiDev.ExterneService.OAuth2_Login_Success_Handler;
+import Esprit.PiDev.Service.User_Details_Service_Impl;
 
 @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 @Configuration
@@ -31,10 +30,11 @@ import javax.servlet.http.HttpSessionListener;
 @EnableWebMvc
 public class Security_Configuration extends WebSecurityConfigurerAdapter {
 	/*
-	  securedEnabled = true: activate the annotation @Secured
-	  jsr250Enabled = true:   activate all annotations Java standardJSR250  @RolesAllowed
-	  prePostEnabled: activate all annotations Spring@PreAuthorizeet@PostAuthorize. 
-	 
+	 * securedEnabled = true: activate the annotation @Secured jsr250Enabled =
+	 * true: activate all annotations Java standardJSR250 @RolesAllowed
+	 * prePostEnabled: activate all annotations
+	 * Spring@PreAuthorizeet@PostAuthorize.
+	 * 
 	 */
 	@Autowired
 	private Authentification_Entry_Point_Config entryPoint;
@@ -45,8 +45,7 @@ public class Security_Configuration extends WebSecurityConfigurerAdapter {
 	Custom_Oauth2_User_Service customService;
 	@Autowired
 	OAuth2_Login_Success_Handler oauth2LoginSuccessHandler;
-	 
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());// Authentication
@@ -55,21 +54,23 @@ public class Security_Configuration extends WebSecurityConfigurerAdapter {
 
 	}
 
-
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable() .authorizeRequests().antMatchers( "/v1/payments/payment/123/execute","/payment/execute","/PAYPAL_SUCCESS_URL","/pay","/confirm-account","/generate","/Sign-In" , "/Sign-Up" ,  "/oauth2/**" , "/all" , "/forgot-password" , "/confirm-reset" , "/reset-password" , "/deleteCron", "/login").permitAll();
+		http.csrf().disable().authorizeRequests().antMatchers("/v1/payments/payment/123/execute", "/payment/execute",
+				"/PAYPAL_SUCCESS_URL", "/pay", "/confirm-account", "/generate", "/Sign-In", "/Sign-Up", "/oauth2/**",
+				"/all", "/forgot-password", "/confirm-reset", "/reset-password", "/deleteCron", "/login", "/bill/**",
+				"/getAllBills", "/retrieve-bill/{bill-id}", "/addBill/{user-id}/{garden-id}", "/updateBill/{bill-id}",
+				"/remove-Bill/{bill-id}", "/getAllForumsSubject", "/retrieve-Subject/{subject-id}",
+				"/removeForumSubject/{sujet-id}", "/update-forumSubject/{forum-id}", "/addForumSubject/{garden-id}",
+				"/addForumSubject/{garden-id}", "/getAllForumsComment", "/update-forumComment",
+				"/retrieve-forumComment/{comment-id}", "/removeForumComment/{comment-id}",
+				"/findCommentBySubject/{subject}", "/addForumCommentToSubject/{subject_id}").permitAll();
 
-				 
+		/*
+		 * The first instruction allows access to the roads
+		 */
 
-				
-				 /*
-								 * The first instruction allows access to the
-								 * roads
-								 */
-
-			http.authorizeRequests().anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll()
+		http.authorizeRequests().anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll()
 				/*
 				 * The second instruction asks all requests to be authenticated,
 				 * and indicates the path to the authentication page (here /
@@ -93,7 +94,8 @@ public class Security_Configuration extends WebSecurityConfigurerAdapter {
 				 * Authorize google authentication then obtaining the user
 				 * attributes from the userInfo End point
 				 */
-				.and().successHandler(oauth2LoginSuccessHandler).and().logout().logoutSuccessUrl("/log-out").logoutSuccessUrl("/Sign-In")
+				.and().successHandler(oauth2LoginSuccessHandler).and().logout().logoutSuccessUrl("/log-out")
+				.logoutSuccessUrl("/Sign-In")
 				/* redirection to this path "/Sign-In" */
 				.clearAuthentication(true).deleteCookies("dummyCookie").and().sessionManagement().maximumSessions(1);
 		/*
@@ -115,8 +117,6 @@ public class Security_Configuration extends WebSecurityConfigurerAdapter {
 	public AuthTokenFilter authenticationJwtTokenFilter() {
 		return new AuthTokenFilter();
 	}
-
-	 
 
 	@Bean
 	public UserDetailsService userDetailsService() {

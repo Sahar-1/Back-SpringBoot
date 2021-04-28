@@ -1,19 +1,25 @@
 package Esprit.PiDev.RestController;
 
-import Esprit.PiDev.Entity.*;
-import Esprit.PiDev.Entity.RequestApiForm.JwtResponse;
-import Esprit.PiDev.Entity.RequestApiForm.MessageResponse;
-import Esprit.PiDev.Entity.RequestApiForm.RequestLogin;
-import Esprit.PiDev.Entity.RequestApiForm.SignupRequest;
-import Esprit.PiDev.Exception.API_Request_Exception_NotFound;
-import Esprit.PiDev.ExterneService.Custom_Oauth2_User;
-import Esprit.PiDev.Repository.ConfirmationTokenRepository;
-import Esprit.PiDev.Repository.Role_Repository;
-import Esprit.PiDev.Repository.User_Repository;
-import Esprit.PiDev.Security.JwtUtils;
-import Esprit.PiDev.Service.Email_Sender_Service;
-import Esprit.PiDev.Service.Session_UserDetails;
-import Esprit.PiDev.Service.User_Service;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.attribute.UserPrincipalNotFoundException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,19 +35,36 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.file.attribute.UserPrincipalNotFoundException;
-import java.util.*;
-import java.util.stream.Collectors;
+import Esprit.PiDev.Entity.Confirmation_Token_User;
+import Esprit.PiDev.Entity.Dbo_Role;
+import Esprit.PiDev.Entity.Dbo_User;
+import Esprit.PiDev.Entity.Dbo_User_Provider;
+import Esprit.PiDev.Entity.ERole;
+import Esprit.PiDev.Entity.RequestApiForm.JwtResponse;
+import Esprit.PiDev.Entity.RequestApiForm.MessageResponse;
+import Esprit.PiDev.Entity.RequestApiForm.RequestLogin;
+import Esprit.PiDev.Entity.RequestApiForm.SignupRequest;
+import Esprit.PiDev.Exception.API_Request_Exception_NotFound;
+import Esprit.PiDev.ExterneService.Custom_Oauth2_User;
+import Esprit.PiDev.Repository.ConfirmationTokenRepository;
+import Esprit.PiDev.Repository.Role_Repository;
+import Esprit.PiDev.Repository.User_Repository;
+import Esprit.PiDev.Security.JwtUtils;
+import Esprit.PiDev.Service.Email_Sender_Service;
+import Esprit.PiDev.Service.Session_UserDetails;
+import Esprit.PiDev.Service.User_Service;
 
 @SuppressWarnings("ALL")
 @CrossOrigin("*")

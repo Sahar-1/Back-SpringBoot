@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import Esprit.PiDev.Entity.Claim;
 import Esprit.PiDev.Entity.Plan;
 import Esprit.PiDev.InterfaceService.Interface_User_Service;
 import Esprit.PiDev.InterfaceService.Plan_Service;
-
 import Esprit.PiDev.Repository.Plan_Repository;
 import Esprit.PiDev.Repository.Role_Repository;
 import Esprit.PiDev.Repository.User_Repository;

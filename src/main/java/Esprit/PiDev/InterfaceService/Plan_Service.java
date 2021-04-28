@@ -2,7 +2,6 @@ package Esprit.PiDev.InterfaceService;
 
 import org.springframework.http.ResponseEntity;
 
-import Esprit.PiDev.Entity.Claim;
 import Esprit.PiDev.Entity.Plan;
 
 public interface Plan_Service {

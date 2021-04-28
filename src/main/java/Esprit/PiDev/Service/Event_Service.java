@@ -1,12 +1,8 @@
 package Esprit.PiDev.Service;
 
-import Esprit.PiDev.Entity.Dbo_User;
-import Esprit.PiDev.Entity.Event;
-import Esprit.PiDev.Entity.RequestApiForm.MessageResponse;
-import Esprit.PiDev.Exception.API_Request_Exception_NotFound;
-import Esprit.PiDev.InterfaceService.Interface_Event_Service;
-import Esprit.PiDev.Repository.Event_Repository;
-import Esprit.PiDev.Repository.User_Repository;
+import java.util.List;
+import java.util.Optional;
+
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,8 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import Esprit.PiDev.Entity.Dbo_User;
+import Esprit.PiDev.Entity.Event;
+import Esprit.PiDev.Entity.RequestApiForm.MessageResponse;
+import Esprit.PiDev.Exception.API_Request_Exception_NotFound;
+import Esprit.PiDev.InterfaceService.Interface_Event_Service;
+import Esprit.PiDev.Repository.Event_Repository;
+import Esprit.PiDev.Repository.User_Repository;
 
 @SuppressWarnings("ALL")
 @Service
@@ -63,8 +64,10 @@ public class Event_Service implements Interface_Event_Service {
         Event this_event = event_repository.findById(event_id).orElse(null);
         Dbo_User child_ToParticipate = user_repository.findById(id_user).orElse(null);
         Event existingEvent = event_repository.findById(event_id).orElseThrow(
-                () -> new RuntimeException("Event not found ")
-        );
+                () -> new RuntimeException("Event not found "));
+        
+        
+        
         Session_UserDetails userDetails = (Session_UserDetails) authentication.getPrincipal();
         Dbo_User currentParent = user_repository.findByEmail(userDetails.getEmail());
 

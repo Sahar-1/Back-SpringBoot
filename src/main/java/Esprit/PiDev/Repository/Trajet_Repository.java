@@ -7,7 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import Esprit.PiDev.Entity.Classe;
 import Esprit.PiDev.Entity.Dbo_User;
 import Esprit.PiDev.Entity.Trajet;
 

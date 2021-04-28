@@ -1,7 +1,5 @@
 package Esprit.PiDev.InterfaceService;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 
 import Esprit.PiDev.Entity.Claim;

@@ -30,14 +30,13 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 public class Bill_Report_Service {
 	private String bill;
 	String name_user;
-	private  static final  long TOTAL_AMOUNT  = 7000;
+	//private  static final  long TOTAL_AMOUNT  = 200;
 	@Autowired
 	Bill_Repository Bill_rep;
 	@Autowired
 	User_Repository usRep;
 	@Autowired
 	Garden_Repository garRep;
-	
 	
 	
 	public String exportReport(String reportFormat ) throws FileNotFoundException, JRException {
@@ -60,7 +59,7 @@ public class Bill_Report_Service {
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
        
         if (reportFormat.equalsIgnoreCase("pdf")) {
-            JasperExportManager.exportReportToPdfFile(jasperPrint, path + "\\bill1.pdf");
+            JasperExportManager.exportReportToPdfFile(jasperPrint, path + "\\bill_adminstrateur.pdf");
         }
 
         return "report generated in path : " + path;
@@ -81,7 +80,7 @@ public class Bill_Report_Service {
     	this.bill = this_User.getFullName();
     	this.name_user=this_User.getFullName();
         for (Bill b : bill){
-        	Long amout_rest_to_pay = (long) (TOTAL_AMOUNT - b.getamount()); 
+        	Long amout_rest_to_pay = (long) (b.getTotal()-b.getamount() ); 
         	Long amount_already_payed = (long) b.getamount();
         	b.setAmount_payed(String.valueOf(amount_already_payed));
         	b.setAmount_not_payed(String.valueOf(amout_rest_to_pay));

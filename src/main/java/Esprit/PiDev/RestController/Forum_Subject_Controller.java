@@ -33,14 +33,24 @@ public class Forum_Subject_Controller {
 	Forum_Subject_Repository forumRep;
 	
 	
-	
-	
-	@RequestMapping("/addForumSubject")
+	@RequestMapping("/addForumSubject/{garden-id}")
 	@ResponseBody
-   public ForumSubject ajouterForumSubject(@RequestBody ForumSubject f) {
-	return fs.Add_Forum_Subjet(f);
-
+	public void ajouterForumSubject(Authentication authentication, @RequestBody ForumSubject F,  @PathVariable("garden-id") Long gardenid) {
+		 
+		
+	//	if ( !(authentication.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_PARENT")))) {
+	    //    throw new API_Request_Exception_UNAUTHORIZED_STATUS_403(authentication.getName().toUpperCase() + " IS UNAUTHORIZED CONTENT WITH THIS AUTHORITY !!! ");
+	 //   } else {
+	  //  	SecurityContextHolder.getContext().setAuthentication(authentication);
+		//	Session_UserDetails userDetails = (Session_UserDetails) authentication.getPrincipal();
+			 fs.Add_ForumSubject(F,gardenid); 
+	   // }
+	
 	}
+	
+	
+	
+	
 	
 	
 	@GetMapping("/getNombreForumSubject")
@@ -51,28 +61,74 @@ public class Forum_Subject_Controller {
 	  }
 	
 	
+	
+	
 	@GetMapping("/getAllForumsSubject")
-	  @ResponseBody
-	  public List<ForumSubject> getAllForums() {
-		 return fs.Retrieve_All_Forum_Subject();
-	  }
+	public List<ForumSubject> getAllForumSubject(Authentication auth)
+  {
 	
-	
-	@DeleteMapping("/removeForum/{forum-id}")
-	public void removeForum(@PathVariable("forum-id") Long forumId){
-		fs.delete_Forum_Subject(forumId);
-	}
-	
-	@PutMapping("/update-forum")
-	public void updateForum(@RequestBody ForumSubject f){
-		fs.Update_ForumSubject(f);
+			//SecurityContextHolder.getContext().setAuthentication(auth);
+			//Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
+			return fs.Retrieve_All_Forum_Subject();
+
 		
+  }
+	
+	@GetMapping("/retrieve-Subject/{subject-id}")
+	@ResponseBody
+	public ForumSubject retrieveSubject(@PathVariable("subject-id") Long subjectId)
+  {
+	
+			//SecurityContextHolder.getContext().setAuthentication(auth);
+		//	Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
+			return fs.findSubject(subjectId);
+
+		
+  }
+	
+	
+	@GetMapping("/retrieve-forumSubject/{forum-id}")
+	public ResponseEntity<?> retrieveForumSubject(Authentication auth,@PathVariable("forum-id") Long forumId)
+  {
+	
+			SecurityContextHolder.getContext().setAuthentication(auth);
+			Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
+			return fs.retrieve_Forum_Subject(userDetails.getId(),forumId);
+
+		
+  }
+	
+	@PutMapping("/update-forumSubject/{forum-id}")
+	public void updateForumSubject(Authentication authentication,@RequestBody ForumSubject f,@PathVariable("forum-id") Long forumId){
+	
+	//if ( !(authentication.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_PARENT")))) {
+       // throw new API_Request_Exception_UNAUTHORIZED_STATUS_403(authentication.getName().toUpperCase() + " IS UNAUTHORIZED CONTENT WITH THIS AUTHORITY !!! ");
+   // } else {
+   // 	SecurityContextHolder.getContext().setAuthentication(authentication);
+	//	Session_UserDetails userDetails = (Session_UserDetails) authentication.getPrincipal();
+		  fs.updateSubject(f,forumId); 
+		//return  fs.updateSubject(authentication,f,forumId,userDetails.getId()); 
+  //  }
 	}
 	
-	@GetMapping("/retrieve-forum/{forum-id}")
-	public ForumSubject retrieveForum(@PathVariable("forum-id") Long forumId) {
-	return fs.retrieve_Forum_Subject(forumId);
-	}
+	
+	
+	
+	
+	/*
+	
+	@DeleteMapping("/removeForumSubject/{forum-id}")
+	public void removeForumSubject(Authentication auth,@PathVariable("forum-id") Long forumId) throws ParseException {
+		//SecurityContextHolder.getContext().setAuthentication(auth);
+		//Session_UserDetails userDetails = (Session_UserDetails) auth.getPrincipal();
+		fs.deleteSubject(forumId);
+	
+	}*/
+	
+	@DeleteMapping("/removeForumSubject/{sujet-id}") 
+	   public void removeSubject(@PathVariable("sujet-id") Long id) { 
+	     fs.deleteSubject(id);
+	   } 
 	
 	@PutMapping("/RatingStatus/{status}/{id-subject}")
 	public ResponseEntity<?> RatingStatus( Authentication auth,@PathVariable("status") float status,@PathVariable("id-subject") Long idSubject) {
@@ -83,8 +139,14 @@ public class Forum_Subject_Controller {
 		return fs.RatingStatus(status, userDetails.getId(),idSubject);
 		
 	}
-	
+	/*
+	@PutMapping(value = "/affecterCommentASubject/{idcom}/{idsub}")
+	public void affecterCommentASubject(@PathVariable("idcom") int commentId, @PathVariable("idsub") int subjectId) {
+		fs.affecterCommentASubject(commentId, subjectId);
+		
 
+	}
+*/
 	
   }
 	

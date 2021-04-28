@@ -1,7 +1,7 @@
 package Esprit.PiDev.Entity;
 
 import java.io.Serializable;
- import java.util.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,9 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -35,10 +36,12 @@ public class Bill implements Serializable{
 	private Long id;
 	
 	private String title;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	//@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern ="yyyy-MM-dd" ,shape =Shape.STRING)
 	private Date dateStart;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	//@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern ="yyyy-MM-dd" ,shape =Shape.STRING)
 	private Date dateDeadline;
 	  
 
@@ -63,12 +66,15 @@ public class Bill implements Serializable{
 	
 	/*-------------------------------association bill and user--------------------------------------------------*/
 	
-	 @ManyToOne/*(fetch=FetchType.EAGER)*/
+	 @ManyToOne /*(fetch=FetchType.EAGER)*/
+	 // @JsonIgnoreProperties({"bills","garden","satisfactions"})
+	 @JsonIgnore
 	 Dbo_User user;
 	 
 	/*-------------------------------association bill and garden--------------------------------------------------*/
 	 
-	
+	//@JsonIgnoreProperties({"bills","users"})
+	 @JsonIgnore
 	 @ManyToOne(fetch=FetchType.EAGER)
 	 Garden garden;
 
@@ -137,10 +143,7 @@ public class Bill implements Serializable{
 		return id;
 	}
 
-
-	public double getAmount() {
-		return amount;
-	}
+ 
 
 
 	public void setAmount(double amount) {
@@ -186,9 +189,7 @@ public class Bill implements Serializable{
 	}
 
 
-	public void setamount(double amount) {
-		this.amount = amount;
-	}
+	 
 
 
 	public String getUserpk() {
